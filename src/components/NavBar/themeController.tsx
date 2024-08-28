@@ -1,4 +1,4 @@
-import { changeTheme } from "../lib/utils";
+import { changeTheme } from "../../lib/utils";
 
 export default function ThemeController() {
   const currentTheme = document.documentElement.dataset.theme;

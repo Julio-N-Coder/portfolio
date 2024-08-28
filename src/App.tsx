@@ -1,4 +1,3 @@
-import ThemeController from "./components/themeController";
 import {
   SmallReactDiv,
   SmallTailwindDiv,
@@ -8,19 +7,13 @@ import {
   SmallAWSSamDiv,
   SmallTypescriptDiv,
 } from "./components/smallNamesWithIcons";
+import NavBar from "./components/NavBar/navBar";
+import { Link } from "react-router-dom";
 
 function App() {
   return (
     <div className="antialiased">
-      {/* NavBar */}
-      <nav className="bg-base-300 text-2xl flex justify-between items-center p-2">
-        <div className="flex">
-          <button className="btn btn-ghost text-2xl">Home</button>
-          <button className="btn btn-ghost text-2xl">Contact Me</button>
-        </div>
-        <ThemeController />
-      </nav>
-      {/* Content */}
+      <NavBar />
       <div className="flex justify-center p-2">
         <h1 className="text-9xl p-12 text-center font-bold">
           Welcome to My Portfolio Website
@@ -30,7 +23,7 @@ function App() {
         <div className="flex flex-col gap-y-40">
           <div className="container mx-auto">
             Hello, I'm Julio. I am someone who is has been learning web
-            development. In this portfolio, you will find some of the projects I
+            development. In this Website, you will find some of the projects I
             have worked on. I hope you enjoy your stay!
           </div>
           <div className="space-y-6">
@@ -38,7 +31,7 @@ function App() {
             <h3>Here Are some Projects I have made</h3>
             {/* Projects */}
             <div className="flex flex-col border-y-2 border-base-content divide-y-2 divide-base-content">
-              <div id="project-1" className="">
+              <div id="project-1">
                 <div className="projectTextContainer">
                   <p>
                     This is my first website I have made and hosted. This
@@ -82,7 +75,7 @@ function App() {
                   className="w-full ifram-height"
                 ></iframe>
               </div>
-              <div id="project-2" className="">
+              <div id="project-2">
                 <div className="projectTextContainer">
                   <p>
                     This is my biggest project I have made so far. I will go
@@ -103,7 +96,7 @@ function App() {
                     </div>
                     <div>
                       <h3 className="text-3xl underline font-bold">Back End</h3>
-                      <div className="">
+                      <div>
                         <SmallNodejsDiv />
                         <SmallTypescriptDiv />
                         <SmallEjsDiv />
@@ -125,9 +118,9 @@ function App() {
                       >
                         Chatvious Website
                       </a>
-                      <a className="link link-info">
+                      <Link to="/chatvious-info" className="link link-info">
                         More Info About Chatvious
-                      </a>
+                      </Link>
                     </div>
                   </div>
                 </div>
@@ -136,6 +129,26 @@ function App() {
                   title="Chatvious Website"
                   className="w-full ifram-height"
                 ></iframe>
+              </div>
+              <div id="project-3">
+                <div className="projectTextContainer">
+                  <p>
+                    This Section is to explain the current Website we are on.
+                    Below are the Technoloiges used to build this website.
+                  </p>
+                  <div className="flex justify-around gap-16">
+                    <div>
+                      <h3 className="text-3xl text-center underline font-bold">
+                        Front End
+                      </h3>
+                      <div className="flex gap-2">
+                        <SmallReactDiv />
+                        <SmallTailwindDiv />
+                        <SmallTypescriptDiv />
+                      </div>
+                    </div>
+                  </div>
+                </div>
               </div>
             </div>
           </div>

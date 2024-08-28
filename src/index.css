@@ -9,3 +9,7 @@
 .projectTextContainer {
   @apply text-2xl text-left p-2 space-y-6
 }
+
+.nav-buttons {
+  @apply btn btn-ghost text-2xl
+}
