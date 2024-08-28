@@ -1,15 +1,28 @@
-const awsSVGPaths = document.getElementsByClassName("awsSVGPaths");
-
 function changeCustomElementColors(theme: string) {
-  if (!awsSVGPaths) return;
+  const awsSVGPaths = document.getElementsByClassName("awsSVGPaths");
+  const githubSVGColors = document.getElementsByClassName("githubSvgColor");
 
-  if (theme === "light") {
-    for (const path of awsSVGPaths) {
-      path?.setAttribute("fill", "#252F3E");
+  if (awsSVGPaths) {
+    if (theme === "light") {
+      for (const path of awsSVGPaths) {
+        path?.setAttribute("fill", "#252F3E");
+      }
+    } else {
+      for (const path of awsSVGPaths) {
+        path?.setAttribute("fill", "#fff");
+      }
     }
-  } else {
-    for (const path of awsSVGPaths) {
-      path?.setAttribute("fill", "#fff");
+  }
+
+  if (githubSVGColors) {
+    if (theme === "light") {
+      for (const githubSVGColor of githubSVGColors) {
+        githubSVGColor?.setAttribute("fill", "#000000");
+      }
+    } else {
+      for (const githubSVGColor of githubSVGColors) {
+        githubSVGColor?.setAttribute("fill", "#ffffff");
+      }
     }
   }
 }

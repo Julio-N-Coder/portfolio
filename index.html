@@ -12,8 +12,10 @@
           window.matchMedia("(prefers-color-scheme: dark)").matches)
       ) {
         document.documentElement.dataset.theme = "dark";
+        localStorage.setItem("theme", "dark");
       } else {
         document.documentElement.dataset.theme = "light";
+        localStorage.setItem("theme", "light");
       }
     </script>
   </head>

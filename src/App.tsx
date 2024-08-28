@@ -7,6 +7,7 @@ import {
   SmallAWSSamDiv,
   SmallTypescriptDiv,
 } from "./components/smallNamesWithIcons";
+import { GithubSvg } from "./components/svgs";
 import NavBar from "./components/NavBar/navBar";
 import { Link } from "react-router-dom";
 
@@ -57,17 +58,27 @@ function App() {
                       <SmallAWSDiv />
                     </div>
                   </div>
-                  <p>
-                    If you would like to check out the website for your self you
-                    can click the link below.
-                  </p>
-                  <a
-                    href="https://www.navarrogardening.com"
-                    target="_blank"
-                    className="link link-info"
-                  >
-                    NavarroGardening
-                  </a>
+                  <div>
+                    <p>
+                      If you would like to check out the website or the github
+                      repo for your self, the links are below.
+                    </p>
+                    <div className="flex gap-4">
+                      <a
+                        href="https://www.navarrogardening.com"
+                        target="_blank"
+                        className="link link-info"
+                      >
+                        NavarroGardening
+                      </a>
+                      <a
+                        href="https://github.com/Night-Coder-404/NavarroGardening"
+                        target="_blank"
+                      >
+                        <GithubSvg className="h-12" />
+                      </a>
+                    </div>
+                  </div>
                 </div>
                 <iframe
                   src="https://www.navarrogardening.com"
@@ -107,8 +118,8 @@ function App() {
                   </div>
                   <div>
                     <p>
-                      The Links Below are to the website and a page for more
-                      info about this project
+                      The Links Below are to the website, the github repo, and a
+                      page for more info about this project
                     </p>
                     <div className="flex gap-6">
                       <a
@@ -121,6 +132,12 @@ function App() {
                       <Link to="/chatvious-info" className="link link-info">
                         More Info About Chatvious
                       </Link>
+                      <a
+                        href="https://github.com/Night-Coder-404/chatvious"
+                        target="_blank"
+                      >
+                        <GithubSvg className="h-12" />
+                      </a>
                     </div>
                   </div>
                 </div>
@@ -147,6 +164,15 @@ function App() {
                         <SmallTypescriptDiv />
                       </div>
                     </div>
+                  </div>
+                  <div>
+                    <p>The github link is Below</p>
+                    <a
+                      href="https://github.com/Night-Coder-404/portfolio"
+                      target="_blank"
+                    >
+                      <GithubSvg className="h-12" />
+                    </a>
                   </div>
                 </div>
               </div>
