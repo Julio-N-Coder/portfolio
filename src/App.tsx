@@ -6,6 +6,12 @@ import {
   SmallAWSDiv,
   SmallAWSSamDiv,
   SmallTypescriptDiv,
+  SmallCloudFrontDiv,
+  SmallAWSS3Div,
+  SmallAWSLambdaDiv,
+  SmallAWSApiGatewayDiv,
+  SmallAWSDynamoDBDiv,
+  SmallAWSCognitoDiv,
 } from "./components/smallNamesWithIcons";
 import { GithubSvg } from "./components/svgs";
 import NavBar from "./components/NavBar/navBar";
@@ -45,18 +51,25 @@ function App() {
                   </p>
                   <div className="flex justify-around gap-16">
                     <div>
-                      <h3 className="text-3xl underline font-bold">
-                        Front End
-                      </h3>
+                      <h3 className="main-tech-title">Front End</h3>
                       <SmallReactDiv />
                       <SmallTailwindDiv />
                       <SmallTypescriptDiv />
                     </div>
-                    <div>
-                      <h3 className="text-3xl underline font-bold">Back End</h3>
-                      <SmallNodejsDiv />
-                      <SmallTypescriptDiv />
-                      <SmallAWSDiv />
+                    <div className="flex items-center gap-4">
+                      <div>
+                        <h3 className="main-tech-title">Back End</h3>
+                        <SmallNodejsDiv />
+                        <SmallTypescriptDiv />
+                        <SmallAWSDiv />
+                      </div>
+                      <div>
+                        <h3 className="main-tech-title">Aws</h3>
+                        <SmallAWSLambdaDiv />
+                        <SmallCloudFrontDiv />
+                        <SmallAWSS3Div />
+                        <SmallAWSApiGatewayDiv />
+                      </div>
                     </div>
                   </div>
                   <div>
@@ -97,23 +110,31 @@ function App() {
                     application and it's made with a few different technologies
                     which are shown below.
                   </p>
-                  <div className="flex justify-around gap-16">
+                  <div className="flex justify-around items-center gap-16">
                     <div>
-                      <h3 className="text-3xl underline font-bold">
-                        Front End
-                      </h3>
+                      <h3 className="main-tech-title">Front End</h3>
                       <SmallReactDiv />
                       <SmallTailwindDiv />
                       <SmallTypescriptDiv />
+                      <SmallEjsDiv />
                     </div>
-                    <div>
-                      <h3 className="text-3xl underline font-bold">Back End</h3>
+                    <div className="flex items-center gap-4">
                       <div>
+                        <h3 className="main-tech-title">Back End</h3>
                         <SmallNodejsDiv />
                         <SmallTypescriptDiv />
                         <SmallEjsDiv />
                         <SmallAWSDiv />
                         <SmallAWSSamDiv />
+                      </div>
+                      <div>
+                        <h3 className="main-tech-title">Aws</h3>
+                        <SmallAWSLambdaDiv />
+                        <SmallAWSDynamoDBDiv />
+                        <SmallCloudFrontDiv />
+                        <SmallAWSS3Div />
+                        <SmallAWSApiGatewayDiv />
+                        <SmallAWSCognitoDiv />
                       </div>
                     </div>
                   </div>
@@ -156,9 +177,7 @@ function App() {
                   </p>
                   <div className="flex justify-around gap-16">
                     <div>
-                      <h3 className="text-3xl text-center underline font-bold">
-                        Front End
-                      </h3>
+                      <h3 className="main-tech-title">Front End</h3>
                       <div className="flex gap-2">
                         <SmallReactDiv />
                         <SmallTailwindDiv />

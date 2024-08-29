@@ -3,8 +3,14 @@ import reactSVG from "../assets/react-svg.svg";
 import tailwindSVG from "../assets/tailwind-svg.svg";
 import nodejsSVG from "../assets/nodejs-icon-svg.svg";
 import ejsSVG from "../assets/ejs-svg.svg";
-import awsSamSVG from "../assets/aws-sam-svg.svg";
 import typescriptSVG from "../assets/typescript-svg.svg";
+import awsSamSVG from "../assets/aws-svgs/aws-sam-svg.svg";
+import awsCloudFrontSVG from "../assets/aws-svgs/aws-CloudFront.svg";
+import awsS3SVG from "../assets/aws-svgs/aws-Simple-Storage-Service.svg";
+import awsLambdaSVG from "../assets/aws-svgs/aws-Lambda.svg";
+import awsApiGatewaySVG from "../assets/aws-svgs/aws-API-Gateway.svg";
+import awsDynamoDBSVG from "../assets/aws-svgs/aws-DynamoDB.svg";
+import awsCognitoSVG from "../assets/aws-svgs/aws-Cognito.svg";
 
 function SmallReactDiv() {
   return (
@@ -86,6 +92,72 @@ function SmallTypescriptDiv() {
   );
 }
 
+function SmallCloudFrontDiv() {
+  return (
+    <div className="flex gap-2">
+      <img
+        src={awsCloudFrontSVG}
+        className="w-8 rounded"
+        alt="AWS CloudFront SVG"
+      />
+      <p>CloudFront</p>
+    </div>
+  );
+}
+
+function SmallAWSS3Div() {
+  return (
+    <div className="flex gap-2">
+      <img src={awsS3SVG} className="w-8 rounded" alt="AWS S3 SVG" />
+      <p>S3</p>
+    </div>
+  );
+}
+
+function SmallAWSLambdaDiv() {
+  return (
+    <div className="flex gap-2">
+      <img src={awsLambdaSVG} className="w-8 rounded" alt="AWS Lambda SVG" />
+      <p>Lambda</p>
+    </div>
+  );
+}
+
+function SmallAWSApiGatewayDiv() {
+  return (
+    <div className="flex gap-2">
+      <img
+        src={awsApiGatewaySVG}
+        className="w-8 rounded"
+        alt="AWS API Gateway SVG"
+      />
+      <p>API Gateway</p>
+    </div>
+  );
+}
+
+function SmallAWSDynamoDBDiv() {
+  return (
+    <div className="flex gap-2">
+      <img
+        src={awsDynamoDBSVG}
+        className="w-8 rounded"
+        alt="AWS DynamoDB SVG"
+      />
+      <p>DynamoDB</p>
+    </div>
+  );
+}
+
+function SmallAWSCognitoDiv() {
+  return (
+    <div className="flex gap-2">
+      <img src={awsCognitoSVG} className="w-8 rounded" alt="AWS Cognito SVG" />
+      <p>Cognito</p>
+    </div>
+  );
+}
+
 export {
   SmallReactDiv,
   SmallTailwindDiv,
@@ -94,4 +166,10 @@ export {
   SmallAWSDiv,
   SmallAWSSamDiv,
   SmallTypescriptDiv,
+  SmallCloudFrontDiv,
+  SmallAWSS3Div,
+  SmallAWSLambdaDiv,
+  SmallAWSApiGatewayDiv,
+  SmallAWSDynamoDBDiv,
+  SmallAWSCognitoDiv,
 };

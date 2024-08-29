@@ -13,3 +13,7 @@
 .nav-buttons {
   @apply btn btn-ghost text-2xl
 }
+
+.main-tech-title {
+  @apply text-3xl text-center underline font-bold
+}
