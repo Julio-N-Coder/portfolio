@@ -9,6 +9,7 @@ import {
 } from "./components/smallNamesWithIcons";
 import { GithubSvg } from "./components/svgs";
 import NavBar from "./components/NavBar/navBar";
+import Footer from "./components/footer";
 import { Link } from "react-router-dom";
 
 function App() {
@@ -179,7 +180,16 @@ function App() {
             </div>
           </div>
         </div>
+        <p className="text-3xl mt-12 p-6">
+          Thank you for checking out my website and I hope you enjoyed what you
+          have seen! If you would like to see my socials or contact me, you can
+          do so by going to the contact me page.&nbsp;
+          <Link to="/contact-me" className="link link-info">
+            Contact Me
+          </Link>
+        </p>
       </div>
+      <Footer />
     </div>
   );
 }

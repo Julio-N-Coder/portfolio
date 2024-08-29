@@ -1,6 +1,7 @@
 function changeCustomElementColors(theme: string) {
   const awsSVGPaths = document.getElementsByClassName("awsSVGPaths");
   const githubSVGColors = document.getElementsByClassName("githubSvgColor");
+  const twitterXSVGPaths = document.getElementsByClassName("twitterXSVGPath");
 
   if (awsSVGPaths) {
     if (theme === "light") {
@@ -22,6 +23,18 @@ function changeCustomElementColors(theme: string) {
     } else {
       for (const githubSVGColor of githubSVGColors) {
         githubSVGColor?.setAttribute("fill", "#ffffff");
+      }
+    }
+  }
+
+  if (twitterXSVGPaths) {
+    if (theme === "light") {
+      for (const twitterXSVGPath of twitterXSVGPaths) {
+        twitterXSVGPath?.setAttribute("fill", "#000000");
+      }
+    } else {
+      for (const twitterXSVGPath of twitterXSVGPaths) {
+        twitterXSVGPath?.setAttribute("fill", "#ffffff");
       }
     }
   }
