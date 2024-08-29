@@ -17,3 +17,19 @@
 .main-tech-title {
   @apply text-3xl text-center underline font-bold
 }
+
+.text-box {
+  @apply text-xl rounded-lg px-2 bg-base-300 flex flex-col gap-4
+}
+
+.title {
+  @apply text-5xl font-bold underline mb-4
+}
+
+.inner-title {
+  @apply text-3xl font-bold
+}
+
+.aws-icon-text {
+  @apply flex gap-2 font-bold
+}

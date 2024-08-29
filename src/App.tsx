@@ -105,10 +105,21 @@ function App() {
                   <p>
                     This is my biggest project I have made so far. I will go
                     over a breif overview of it right now but If you would like
-                    to know more, there is a link at the bottom of this text
+                    to know more, there is a link at the bottom of this section
                     that goes more in depth. This project is a real time chat
                     application and it's made with a few different technologies
-                    which are shown below.
+                    which are shown below. To sum it up I have my compute
+                    running in lambda functions, My Database is with DynamoDB, I
+                    am using Api Gateway so users can invoke my lambda functions
+                    from the browser on certain actions, I Also have a websocket
+                    api gateway to handle the websocket connections and invoke
+                    the right lambda functions, I have Cognito with User Pools
+                    to use Authentication and Authorization, I have an S3 bucket
+                    storing my static content, and I have a CloudFront
+                    Distrobution servering that static content. This is all
+                    built and managed with an infrustructure as code tool called
+                    AWS Sam. There is a nice diagram in the more info page to
+                    show how this works visually if you would like to see that.
                   </p>
                   <div className="flex justify-around items-center gap-16">
                     <div>
