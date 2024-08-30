@@ -192,10 +192,18 @@ function App() {
                         <SmallTypescriptDiv />
                       </div>
                     </div>
-                    <div>
-                      <h3 className="main-tech-title">Back End</h3>
-                      <div className="flex flex-col gap-2">
-                        <SmallGithubActionsDiv />
+                    <div className="backend-stack">
+                      <div>
+                        <h3 className="main-tech-title">Back End</h3>
+                        <div className="flex flex-col gap-2">
+                          <SmallAWSDiv />
+                          <SmallGithubActionsDiv />
+                        </div>
+                      </div>
+                      <div>
+                        <h3 className="main-tech-title">Aws</h3>
+                        <SmallCloudFrontDiv />
+                        <SmallAWSS3Div />
                       </div>
                     </div>
                   </div>
