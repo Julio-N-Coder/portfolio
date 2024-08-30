@@ -1,0 +1,31 @@
+name: Front End Deployment
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+      - name: Setup AWS Credentials
+        uses: aws-actions/configure-aws-credentials@v2
+        with:
+          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID_STATIC_DEPLOY }}
+          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY_STATIC_DEPLOY }}
+          aws-region: us-west-1
+      - name: Install dependencies
+        run: npm install
+      - name: Build
+        run: npm run build
+      - name: Store in S3 bucket
+        run: aws s3 sync ./dist/ s3://portfolio-website-static-bucket/ --delete
+      - name: Invalidate cloudfront Dist Cache
+        run: aws cloudfront create-invalidation --distribution-id E32JWBEBSAC70X --paths "/*"

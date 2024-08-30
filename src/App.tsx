@@ -80,7 +80,7 @@ function App() {
                       If you would like to check out the website or the github
                       repo for your self, the links are below.
                     </p>
-                    <div className="flex gap-4">
+                    <div className="flex items-center gap-4">
                       <a
                         href="https://www.navarrogardening.com"
                         target="_blank"
@@ -151,7 +151,7 @@ function App() {
                       The Links Below are to the website, the github repo, and a
                       page for more info about this project
                     </p>
-                    <div className="flex gap-6">
+                    <div className="flex items-center gap-6">
                       <a
                         href="https://main.chatvious.coding-wielder.com/"
                         target="_blank"
@@ -183,13 +183,19 @@ function App() {
                     This Section is to explain the current Website we are on.
                     Below are the Technoloiges used to build this website.
                   </p>
-                  <div className="flex justify-around gap-16">
+                  <div className="flex max-[390px]:flex-col justify-around items-center gap-16">
                     <div>
                       <h3 className="main-tech-title">Front End</h3>
-                      <div className="flex max-[390px]:flex-col gap-2">
+                      <div className="flex flex-col gap-2">
                         <SmallReactDiv />
                         <SmallTailwindDiv />
                         <SmallTypescriptDiv />
+                      </div>
+                    </div>
+                    <div>
+                      <h3 className="main-tech-title">Back End</h3>
+                      <div className="flex flex-col gap-2">
+                        <SmallGithubActionsDiv />
                       </div>
                     </div>
                   </div>
