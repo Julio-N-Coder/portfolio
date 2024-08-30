@@ -11,7 +11,7 @@
 }
 
 .nav-buttons {
-  @apply btn btn-ghost text-2xl
+  @apply btn btn-ghost text-2xl hidden xsm:flex
 }
 
 .main-tech-title {
@@ -23,7 +23,7 @@
 }
 
 .title {
-  @apply text-5xl font-bold underline mb-4
+  @apply text-4xl xsm:text-5xl font-bold underline mb-4
 }
 
 .inner-title {
@@ -32,4 +32,20 @@
 
 .aws-icon-text {
   @apply flex gap-2 font-bold
+}
+
+.tech-stack {
+  @apply flex flex-col sm:flex-row sm:justify-around items-center gap-16
+}
+
+.backend-stack {
+  @apply flex max-[390px]:flex-col items-center gap-4
+}
+
+.project {
+  @apply pb-2 border-b-2 border-base-content space-y-6
+}
+
+.project:last-child {
+  @apply border-b-0;
 }

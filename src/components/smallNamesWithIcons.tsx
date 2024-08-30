@@ -11,6 +11,7 @@ import awsLambdaSVG from "../assets/aws-svgs/aws-Lambda.svg";
 import awsApiGatewaySVG from "../assets/aws-svgs/aws-API-Gateway.svg";
 import awsDynamoDBSVG from "../assets/aws-svgs/aws-DynamoDB.svg";
 import awsCognitoSVG from "../assets/aws-svgs/aws-Cognito.svg";
+import githubActionsSVG from "../assets/github-actions-svg.svg";
 
 interface props {
   className?: string;
@@ -189,6 +190,17 @@ function SmallAWSCognitoDiv({ className, appendingText }: props) {
   );
 }
 
+function SmallGithubActionsDiv({ className, appendingText }: props) {
+  return (
+    <div className={className ? className : "flex gap-2"}>
+      <img src={githubActionsSVG} className="w-8" alt="Github Actions SVG" />
+      <p>
+        Github Actions<span>{appendingText}</span>
+      </p>
+    </div>
+  );
+}
+
 export {
   SmallReactDiv,
   SmallTailwindDiv,
@@ -203,4 +215,5 @@ export {
   SmallAWSApiGatewayDiv,
   SmallAWSDynamoDBDiv,
   SmallAWSCognitoDiv,
+  SmallGithubActionsDiv,
 };

@@ -7,7 +7,7 @@ export default function ContactMe() {
       <div className="min-h-screen flex flex-col justify-between">
         <div>
           <NavBar />
-          <div className="text-3xl text-center flex flex-col gap-6">
+          <div className="text-2xl mdsm:text-3xl break-words text-center flex flex-col gap-6">
             <div>
               <h2 className="font-bold underline">Email</h2>
               <a

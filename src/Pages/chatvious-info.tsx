@@ -97,6 +97,12 @@ export default function ChatviousInfo() {
                       AWS Sam Documentation
                     </a>
                   </p>
+                  <p>
+                    I also have{" "}
+                    <span className="font-bold">Github Actions</span> Github
+                    Actions set up for this project so code can be tested and
+                    deployed automatically.
+                  </p>
                   <p>Below this text shows the aws resouces used.</p>
                 </div>
               </div>
