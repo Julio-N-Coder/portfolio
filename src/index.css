@@ -43,9 +43,9 @@
 }
 
 .project {
-  @apply pb-2 border-b-2 border-base-content space-y-6
+  @apply text-2xl text-left p-2 space-y-16
 }
 
-.project:last-child {
-  @apply border-b-0;
+.project-title {
+  @apply xsm:text-8xl text-6xl font-bold text-center mb-20
 }

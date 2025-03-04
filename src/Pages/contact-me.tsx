@@ -22,10 +22,10 @@ export default function ContactMe() {
               <h2 className="font-bold underline">Github</h2>
               <a
                 className="link link-info"
-                href="https://github.com/Night-Coder-404/chatvious"
+                href="https://github.com/Julio-N-Coder"
                 target="_blank"
               >
-                https://github.com/Night-Coder-404/chatvious
+                https://github.com/Julio-N-Coder
               </a>
             </div>
             <div>
