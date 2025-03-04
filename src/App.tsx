@@ -4,6 +4,7 @@ import { Link } from "react-router-dom";
 import NavarroGardening from "./projects/NavarroGardening";
 import Chatvious from "./projects/Chatvious";
 import Portfolio from "./projects/Portfolio";
+import JobTracker from "./projects/JobTracker";
 
 function App() {
   return (
@@ -33,6 +34,7 @@ function App() {
               <Chatvious />
               <NavarroGardening />
               <Portfolio />
+              <JobTracker />
             </div>
           </div>
         </div>
