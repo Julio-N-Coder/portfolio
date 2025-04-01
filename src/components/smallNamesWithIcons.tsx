@@ -18,47 +18,81 @@ interface props {
   appendingText?: string;
 }
 
-function SmallReactDiv({ className, appendingText }: props) {
+interface BaseProps extends props {
+  svgImage: string;
+  title: string;
+  alt: string;
+  svgClassName?: string;
+}
+
+function SmallSVGBaseDiv({
+  className,
+  appendingText,
+  svgImage,
+  title,
+  alt,
+  svgClassName,
+}: BaseProps) {
   return (
     <div className={className ? className : "flex gap-2"}>
-      <img src={reactSVG} className="w-8" alt="React SVG" />
+      <img
+        src={svgImage}
+        className={`w-8 ${svgClassName && svgClassName}`}
+        alt={alt}
+      />
       <p>
-        React<span>{appendingText}</span>
+        {title}
+        <span>{appendingText}</span>
       </p>
     </div>
+  );
+}
+
+function SmallReactDiv({ className, appendingText }: props) {
+  return (
+    <SmallSVGBaseDiv
+      className={className}
+      appendingText={appendingText}
+      svgImage={reactSVG}
+      title="React"
+      alt="React SVG"
+    />
   );
 }
 
 function SmallTailwindDiv({ className, appendingText }: props) {
   return (
-    <div className={className ? className : "flex gap-2"}>
-      <img src={tailwindSVG} className="w-8" alt="Tailwind SVG" />
-      <p>
-        Tailwind<span>{appendingText}</span>
-      </p>
-    </div>
+    <SmallSVGBaseDiv
+      className={className}
+      appendingText={appendingText}
+      svgImage={tailwindSVG}
+      title="Tailwind"
+      alt="Tailwind SVG"
+    />
   );
 }
 
 function SmallNodejsDiv({ className, appendingText }: props) {
   return (
-    <div className={className ? className : "flex gap-2"}>
-      <img src={nodejsSVG} className="w-8" alt="Nodejs SVG" />
-      <p>
-        Nodejs<span>{appendingText}</span>
-      </p>
-    </div>
+    <SmallSVGBaseDiv
+      className={className}
+      appendingText={appendingText}
+      svgImage={nodejsSVG}
+      title="Nodejs"
+      alt="Nodejs SVG"
+    />
   );
 }
 
 function SmallEjsDiv({ className, appendingText }: props) {
   return (
-    <div className={className ? className : "flex gap-2"}>
-      <img src={ejsSVG} className="w-8" alt="EJS SVG" />
-      <p>
-        EJS<span>{appendingText}</span>
-      </p>
-    </div>
+    <SmallSVGBaseDiv
+      className={className}
+      appendingText={appendingText}
+      svgImage={ejsSVG}
+      title="EJS"
+      alt="EJS SVG"
+    />
   );
 }
 
@@ -92,112 +126,115 @@ function SmallAWSDiv({ className, appendingText }: props) {
 
 function SmallAWSSamDiv({ className, appendingText }: props) {
   return (
-    <div className={className ? className : "flex gap-2"}>
-      <img src={awsSamSVG} className="w-8" alt="AWS SAM SVG" />
-      <p>
-        AWS SAM<span>{appendingText}</span>
-      </p>
-    </div>
+    <SmallSVGBaseDiv
+      className={className}
+      appendingText={appendingText}
+      svgImage={awsSamSVG}
+      title="AWS SAM"
+      alt="AWS SAM SVG"
+    />
   );
 }
 
 function SmallTypescriptDiv({ className, appendingText }: props) {
   return (
-    <div className={className ? className : "flex gap-2"}>
-      <img src={typescriptSVG} className="w-8" alt="Typescript SVG" />
-      <p>
-        Typescript<span>{appendingText}</span>
-      </p>
-    </div>
+    <SmallSVGBaseDiv
+      className={className}
+      appendingText={appendingText}
+      svgImage={typescriptSVG}
+      title="Typescript"
+      alt="Typescript SVG"
+    />
   );
 }
 
 function SmallCloudFrontDiv({ className, appendingText }: props) {
   return (
-    <div className={className ? className : "flex gap-2"}>
-      <img
-        src={awsCloudFrontSVG}
-        className="w-8 rounded"
-        alt="AWS CloudFront SVG"
-      />
-      <p>
-        CloudFront<span>{appendingText}</span>
-      </p>
-    </div>
+    <SmallSVGBaseDiv
+      className={className}
+      appendingText={appendingText}
+      svgImage={awsCloudFrontSVG}
+      svgClassName="rounded"
+      title="CloudFront"
+      alt="AWS CloudFront SVG"
+    />
   );
 }
 
 function SmallAWSS3Div({ className, appendingText }: props) {
   return (
-    <div className={className ? className : "flex gap-2"}>
-      <img src={awsS3SVG} className="w-8 rounded" alt="AWS S3 SVG" />
-      <p>
-        S3<span>{appendingText}</span>
-      </p>
-    </div>
+    <SmallSVGBaseDiv
+      className={className}
+      appendingText={appendingText}
+      svgImage={awsS3SVG}
+      svgClassName="rounded"
+      title="S3"
+      alt="AWS S3 SVG"
+    />
   );
 }
 
 function SmallAWSLambdaDiv({ className, appendingText }: props) {
   return (
-    <div className={className ? className : "flex gap-2"}>
-      <img src={awsLambdaSVG} className="w-8 rounded" alt="AWS Lambda SVG" />
-      <p>
-        Lambda<span>{appendingText}</span>
-      </p>
-    </div>
+    <SmallSVGBaseDiv
+      className={className}
+      appendingText={appendingText}
+      svgImage={awsLambdaSVG}
+      svgClassName="rounded"
+      title="Lambda"
+      alt="AWS Lambda SVG"
+    />
   );
 }
 
 function SmallAWSApiGatewayDiv({ className, appendingText }: props) {
   return (
-    <div className={className ? className : "flex gap-2"}>
-      <img
-        src={awsApiGatewaySVG}
-        className="w-8 rounded"
-        alt="AWS API Gateway SVG"
-      />
-      <p>
-        API Gateway<span>{appendingText}</span>
-      </p>
-    </div>
+    <SmallSVGBaseDiv
+      className={className}
+      appendingText={appendingText}
+      svgImage={awsApiGatewaySVG}
+      svgClassName="rounded"
+      title="API Gateway"
+      alt="AWS API Gateway SVG"
+    />
   );
 }
 
 function SmallAWSDynamoDBDiv({ className, appendingText }: props) {
   return (
-    <div className={className ? className : "flex gap-2"}>
-      <img
-        src={awsDynamoDBSVG}
-        className="w-8 rounded"
-        alt="AWS DynamoDB SVG"
-      />
-      <p>
-        DynamoDB<span>{appendingText}</span>
-      </p>
-    </div>
+    <SmallSVGBaseDiv
+      className={className}
+      appendingText={appendingText}
+      svgImage={awsDynamoDBSVG}
+      svgClassName="rounded"
+      title="DynamoDB"
+      alt="AWS DynamoDB SVG"
+    />
   );
 }
 
 function SmallAWSCognitoDiv({ className, appendingText }: props) {
   return (
-    <div className={className ? className : "flex gap-2"}>
-      <img src={awsCognitoSVG} className="w-8 rounded" alt="AWS Cognito SVG" />
-      <p>
-        Cognito<span>{appendingText}</span>
-      </p>
-    </div>
+    <SmallSVGBaseDiv
+      className={className}
+      appendingText={appendingText}
+      svgImage={awsCognitoSVG}
+      svgClassName="rounded"
+      title="Cognito"
+      alt="AWS Cogntio SVG"
+    />
   );
 }
 
 function SmallGithubActionsDiv({ className, appendingText }: props) {
   return (
-    <div className={className ? className : "flex gap-2"}>
-      <img src={githubActionsSVG} className="w-8" alt="Github Actions SVG" />
-      <p>
-        Github Actions<span>{appendingText}</span>
-      </p>
-    </div>
+    <SmallSVGBaseDiv
+      className={className}
+      appendingText={appendingText}
+      svgImage={githubActionsSVG}
+      title="Github Actions"
+      alt="Github Actions SVG"
+    />
   );
 }
 
