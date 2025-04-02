@@ -156,7 +156,7 @@ function SmallCloudFrontDiv({ className, appendingText }: props) {
       className={className}
       appendingText={appendingText}
       svgImage={awsCloudFrontSVG}
-      svgClassName="rounded"
+      svgClassName="rounded-sm"
       title="CloudFront"
       alt="AWS CloudFront SVG"
     />
@@ -169,7 +169,7 @@ function SmallAWSS3Div({ className, appendingText }: props) {
       className={className}
       appendingText={appendingText}
       svgImage={awsS3SVG}
-      svgClassName="rounded"
+      svgClassName="rounded-sm"
       title="S3"
       alt="AWS S3 SVG"
     />
@@ -182,7 +182,7 @@ function SmallAWSLambdaDiv({ className, appendingText }: props) {
       className={className}
       appendingText={appendingText}
       svgImage={awsLambdaSVG}
-      svgClassName="rounded"
+      svgClassName="rounded-sm"
       title="Lambda"
       alt="AWS Lambda SVG"
     />
@@ -195,7 +195,7 @@ function SmallAWSApiGatewayDiv({ className, appendingText }: props) {
       className={className}
       appendingText={appendingText}
       svgImage={awsApiGatewaySVG}
-      svgClassName="rounded"
+      svgClassName="rounded-sm"
       title="API Gateway"
       alt="AWS API Gateway SVG"
     />
@@ -208,7 +208,7 @@ function SmallAWSDynamoDBDiv({ className, appendingText }: props) {
       className={className}
       appendingText={appendingText}
       svgImage={awsDynamoDBSVG}
-      svgClassName="rounded"
+      svgClassName="rounded-sm"
       title="DynamoDB"
       alt="AWS DynamoDB SVG"
     />
@@ -221,7 +221,7 @@ function SmallAWSCognitoDiv({ className, appendingText }: props) {
       className={className}
       appendingText={appendingText}
       svgImage={awsCognitoSVG}
-      svgClassName="rounded"
+      svgClassName="rounded-sm"
       title="Cognito"
       alt="AWS Cogntio SVG"
     />

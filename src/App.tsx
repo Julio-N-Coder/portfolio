@@ -1,6 +1,6 @@
 import NavBar from "./components/NavBar/navBar";
 import Footer from "./components/footer";
-import { Link } from "react-router-dom";
+import { Link } from "react-router";
 import NavarroGardening from "./projects/NavarroGardening";
 import Chatvious from "./projects/Chatvious";
 import Portfolio from "./projects/Portfolio";

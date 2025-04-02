@@ -3,7 +3,7 @@ import { createRoot } from "react-dom/client";
 import App from "./App.tsx";
 import ContactMe from "./Pages/contact-me.tsx";
 import ChatviousInfo from "./Pages/chatvious-info.tsx";
-import { createBrowserRouter, RouterProvider } from "react-router-dom";
+import { createBrowserRouter, RouterProvider } from "react-router";
 import "./index.css";
 
 const router = createBrowserRouter([
@@ -20,8 +20,8 @@ const router = createBrowserRouter([
     element: <ChatviousInfo />,
   },
   {
-    path: "*",
-    element: <div>404 Not Found</div>,
+    path: "/",
+    children: [{ path: "*", element: <div>404 Not Found</div> }],
   },
 ]);
 

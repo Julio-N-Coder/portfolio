@@ -15,7 +15,7 @@ import {
   SmallGithubActionsDiv,
 } from "../components/smallNamesWithIcons";
 import { GithubSvg } from "../components/svgs";
-import { Link } from "react-router-dom";
+import { Link } from "react-router";
 
 export default function Chatvious() {
   return (

@@ -1,6 +1,9 @@
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
+@import 'tailwindcss';
+@plugin "daisyui";
+@theme {
+  --breakpoint-xsm: 440px;
+  --breakpoint-mdsm: 520px;
+}
 
 .ifram-height {
   height: 450px

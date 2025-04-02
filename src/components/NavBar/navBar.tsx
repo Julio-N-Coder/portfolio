@@ -1,5 +1,5 @@
 import ThemeController from "./themeController";
-import { NavLink } from "react-router-dom";
+import { NavLink } from "react-router";
 
 export default function NavBar() {
   return (
@@ -25,7 +25,7 @@ export default function NavBar() {
           </div>
           <ul
             tabIndex={0}
-            className="dropdown-content menu bg-base-100 rounded-box z-[1] w-52 p-2 shadow"
+            className="dropdown-content menu bg-base-100 rounded-box z-1 w-52 p-2 shadow-sm"
           >
             <li>
               <NavLink
