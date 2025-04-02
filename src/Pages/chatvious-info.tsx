@@ -1,3 +1,4 @@
+import { useEffect } from "react";
 import NavBar from "../components/NavBar/navBar";
 import Footer from "../components/footer";
 import {
@@ -16,6 +17,10 @@ import chatviousProfileInfoPage from "../assets/chatvious-screenshots/chatvious-
 import chatviousChatRoomPage from "../assets/chatvious-screenshots/chatvious-chatRoomPage-Screenshot.png";
 
 export default function ChatviousInfo() {
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, []);
+
   return (
     <div className="antialiased">
       <NavBar />
