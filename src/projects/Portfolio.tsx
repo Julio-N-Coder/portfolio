@@ -1,8 +1,6 @@
+import GenericFrontEnd from "../components/projects/GenericFrontEnd";
 import {
-  SmallReactDiv,
-  SmallTailwindDiv,
   SmallAWSDiv,
-  SmallTypescriptDiv,
   SmallCloudFrontDiv,
   SmallAWSS3Div,
   SmallGithubActionsDiv,
@@ -18,14 +16,7 @@ export default function Portfolio() {
         Technoloiges used to build this website.
       </p>
       <div className="flex max-xsm:flex-col justify-around items-center gap-16">
-        <div>
-          <h3 className="main-tech-title">Front End</h3>
-          <div className="flex flex-col gap-2">
-            <SmallReactDiv />
-            <SmallTailwindDiv />
-            <SmallTypescriptDiv />
-          </div>
-        </div>
+        <GenericFrontEnd />
         <div className="backend-stack">
           <div>
             <h3 className="main-tech-title">Back End</h3>

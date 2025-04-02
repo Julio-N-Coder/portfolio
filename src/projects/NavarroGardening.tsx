@@ -1,6 +1,5 @@
+import GenericFrontEnd from "../components/projects/GenericFrontEnd";
 import {
-  SmallReactDiv,
-  SmallTailwindDiv,
   SmallNodejsDiv,
   SmallAWSDiv,
   SmallTypescriptDiv,
@@ -23,12 +22,7 @@ export default function NavarroGardening() {
         send emails.
       </p>
       <div className="tech-stack">
-        <div>
-          <h3 className="main-tech-title">Front End</h3>
-          <SmallReactDiv />
-          <SmallTailwindDiv />
-          <SmallTypescriptDiv />
-        </div>
+        <GenericFrontEnd />
         <div className="backend-stack">
           <div>
             <h3 className="main-tech-title">Back End</h3>

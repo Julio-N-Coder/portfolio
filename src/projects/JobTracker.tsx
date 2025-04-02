@@ -1,11 +1,9 @@
 import { GithubSvg } from "../components/svgs";
 import {
-  SmallReactDiv,
-  SmallTailwindDiv,
-  SmallTypescriptDiv,
   SmallJavaDiv,
   SmallSpringBootDiv,
 } from "../components/smallNamesWithIcons";
+import GenericFrontEnd from "../components/projects/GenericFrontEnd";
 
 export default function JobTracker() {
   return (
@@ -19,12 +17,7 @@ export default function JobTracker() {
           manage different jobs.
         </p>
         <div className="tech-stack">
-          <div>
-            <h3 className="main-tech-title">Front End</h3>
-            <SmallReactDiv />
-            <SmallTailwindDiv />
-            <SmallTypescriptDiv />
-          </div>
+          <GenericFrontEnd />
           <div className="backend-stack">
             <div>
               <h3 className="main-tech-title">Back End</h3>
