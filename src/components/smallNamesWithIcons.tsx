@@ -12,6 +12,8 @@ import awsApiGatewaySVG from "../assets/aws-svgs/aws-API-Gateway.svg";
 import awsDynamoDBSVG from "../assets/aws-svgs/aws-DynamoDB.svg";
 import awsCognitoSVG from "../assets/aws-svgs/aws-Cognito.svg";
 import githubActionsSVG from "../assets/github-actions-svg.svg";
+import javaSVG from "../assets/java-logo.svg";
+import springBootSVG from "../assets/spring-boot.svg";
 
 interface props {
   className?: string;
@@ -238,6 +240,30 @@ function SmallGithubActionsDiv({ className, appendingText }: props) {
   );
 }
 
+function SmallJavaDiv({ className, appendingText }: props) {
+  return (
+    <SmallSVGBaseDiv
+      className={className}
+      appendingText={appendingText}
+      svgImage={javaSVG}
+      title="Java"
+      alt="Java SVG"
+    />
+  );
+}
+
+function SmallSpringBootDiv({ className, appendingText }: props) {
+  return (
+    <SmallSVGBaseDiv
+      className={className}
+      appendingText={appendingText}
+      svgImage={springBootSVG}
+      title="Spring Boot"
+      alt="Spring Boot SVG"
+    />
+  );
+}
+
 export {
   SmallReactDiv,
   SmallTailwindDiv,
@@ -253,4 +279,6 @@ export {
   SmallAWSDynamoDBDiv,
   SmallAWSCognitoDiv,
   SmallGithubActionsDiv,
+  SmallJavaDiv,
+  SmallSpringBootDiv,
 };

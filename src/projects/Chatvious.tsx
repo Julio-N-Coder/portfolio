@@ -81,7 +81,7 @@ export default function Chatvious() {
               More Info About Chatvious
             </Link>
             <a
-              href="https://github.com/Night-Coder-404/chatvious"
+              href="https://github.com/Julio-N-Coder/chatvious"
               target="_blank"
             >
               <GithubSvg className="h-12" />
