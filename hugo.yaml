@@ -1,0 +1,171 @@
+# Use the “any schema” (no validation). Otherwise yaml schema validation reports false errors.
+# yaml-language-server: $schema=https://www.schemastore.org/any.json
+baseURL: https://example.docsy.dev
+title: Coding Wielder Website
+
+# Navbar links
+menu:
+  main:
+    - name: Projects
+      url: /projects/
+      weight: 1
+    - name: Guides
+      url: /guides/
+      weight: 2
+    - name: Contact Me
+      url: /contact-me/
+      weight: 3
+
+# cSpell:ignore goldmark github hugo readingtime docsy subdir lastmod pygments linenos catmullrom norsk gu slugorcontentbasename
+
+enableRobotsTXT: true
+
+# Will give values to .Lastmod etc.
+enableGitInfo: true
+
+# Highlighting config
+pygmentsCodeFences: true
+pygmentsUseClasses: false
+# Use the new Chroma Go highlighter in Hugo.
+pygmentsUseClassic: false
+# pygmentsOptions: "linenos=table"
+# See https://help.farbox.com/pygments.html
+pygmentsStyle: tango
+
+mediaTypes:
+  text/redirects:
+    delimiter: ""
+
+outputFormats:
+  redirects:
+    baseName: _redirects
+    isPlainText: true
+    mediaType: text/redirects
+    root: true
+
+# Image processing configuration.
+imaging:
+  resampleFilter: CatmullRom
+  quality: 75
+  anchor: smart
+
+markup:
+  goldmark:
+    parser:
+      attribute:
+        block: true
+    renderer:
+      unsafe: true
+  highlight:
+    # See a complete list of available styles at https://xyproto.github.io/splash/docs/all.html
+    style: tango
+    noClasses: false # Required for dark-mode support of code blocks
+
+# Everything below this are Site Params
+
+# Comment out if you don't want the "print entire section" link enabled in the right sidebar.
+outputs:
+  home: [HTML, print, RSS, redirects]
+  section: [HTML, print, RSS]
+
+params:
+  taxonomy:
+    # set taxonomyCloud = [] to hide taxonomy clouds
+    taxonomyCloud: [tags, categories]
+
+    # If used, must have same length as taxonomyCloud
+    taxonomyCloudTitle: [Tag Cloud, Categories]
+
+    # set taxonomyPageHeader = [] to hide taxonomies on the page headers
+    taxonomyPageHeader: [tags, categories]
+
+  # First one is picked as the Twitter card image if not set on page.
+  # images: [images/project-illustration.png]
+
+  # Menu title if your navbar has a versions selector to access old versions of your site.
+  # This menu appears only if you have at least one [params.versions] set.
+  version_menu: Releases
+
+  # Flag used in the "version-banner" partial to decide whether to display a
+  # banner on every page indicating that this is an archived version of the docs.
+  # Set this flag to "true" if you want to display the banner.
+  archived_version: false
+
+  # Internal version number with build ID.
+  versionWithBuildId: 0.14.3
+
+  # Repository configuration (URLs for in-page links to opening issues and suggesting changes)
+  github_repo: https://github.com/google/docsy-example
+
+  # Uncomment this if your GitHub repo does not have "main" as the default branch,
+  # or specify a new value if you want to reference another branch in your GitHub links
+  github_branch: main
+
+  # Enable Lunr.js offline search
+  offlineSearch: true
+
+  # Enable syntax highlighting and copy buttons on code blocks with Prism
+  prism_syntax_highlighting: false
+
+  # User interface configuration
+  ui:
+    # Set to true to disable breadcrumb navigation.
+    breadcrumb_disable: false
+    # Set to true to display a logo (/assets/icons/logo.svg) in the top navbar
+    navbar_logo: false
+    # Set to true if you don't want the top navbar to be translucent when over a `block/cover`, like on the homepage.
+    navbar_translucent_over_cover_disable: false
+
+    sidebar_menu_foldable: true
+    # Enable to show the side bar menu in its compact state.
+    # Only the current page’s ancestors, siblings and direct descendants are shown in sidebar.
+    sidebar_menu_compact: false
+    # Set to true to hide the sidebar search box (the top nav search box will still be displayed if search is enabled)
+    sidebar_search_disable: false
+    # Enable light/dark mode toggle menu in the navbar
+    showLightDarkModeMenu: true
+
+    # Adds a reading time to the top of each doc.
+    # If you want this feature, but occasionally need to remove the Reading time from a single page,
+    # add "hide_readingtime: true" to the page's front matter
+    readingtime:
+      enable: false
+  # Docs helpers: use with _param
+  btn-lg: class="btn btn-lg btn-{1}" role="button"
+  FA: <i class="fa-{1} fa-{2} text-{3} px-1"></i>
+
+  links:
+    # End user relevant links. These will show up on left side of footer and in the community page if you have one.
+    user:
+      - name: Mailing list
+        url: mailto:julio.coder.socials@gmail.com
+        icon: fa fa-envelope
+        desc: Discussion and help from your fellow users
+      - name: X
+        url: https://twitter.com/Night_Coder_404
+        icon: fab fa-x-twitter
+        desc: Follow us on X to get the latest news!
+      - name: Linkedin
+        url: https://www.linkedin.com/in/julio-navarro-824983266
+        icon: fa-brands fa-linkedin
+        desc: My Linkedin Page
+    # Developer relevant links. These will show up on right side of footer and in the community page if you have one.
+    developer:
+      - name: GitHub
+        url: https://github.com/Julio-N-Coder
+        icon: fab fa-github
+        desc: Development takes place here!
+
+security:
+  funcs: # cspell:disable-line
+    getenv: # cspell:disable-line
+      # Netlify build env var
+      - ^(BRANCH|BUILD_ID|COMMIT_REF|CONTEXT|DEPLOY_ID|NETLIFY|PULL_REQUEST|REVIEW_ID)$
+
+module:
+  hugoVersion:
+    extended: true
+    min: 0.155.0
+  imports:
+    - path: github.com/google/docsy
+      disable: false

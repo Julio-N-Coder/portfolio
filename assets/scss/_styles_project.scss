@@ -1,0 +1,106 @@
+/*
+Project-specific styles. For details, see:
+https://www.docsy.dev/docs/content/lookandfeel/#project-style-files
+*/
+
+// Dark mode enhancements
+@import 'td/color-adjustments-dark';
+@import 'td/code-dark';
+@import 'td/gcs-search-dark';
+@import 'td/extra/buttons';
+@import 'td/extra/main-container';
+
+// Example of color tuning
+
+.td-box--primary {
+  // TODO: rework the td-box--* classes so that they don't override `color`;
+  // otherwise we can't use Bootstrap's CSS variables:
+  // --bs-link-color: $color !important;
+  // --bs-link-color-rgb: red !important;
+  a {
+    color: tint-color($primary, 80%) !important;
+  }
+}
+
+// Auto resize images
+img {
+  max-width: 100%;
+  height: auto;
+}
+
+// Disable "Create child page" link in right sidbar
+.td-page-meta__child {
+  display: none !important;
+}
+
+// Remove dark overlay on blocks/cover shortcode
+.td-overlay--dark::after {
+    background-color: transparent;
+}
+
+.tech-stack {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 3rem;
+
+  @include media-breakpoint-up(sm) {
+    flex-direction: row;
+    justify-content: space-around;
+    align-items: flex-start;
+  }
+}
+
+// Side-by-side columns
+.tech-cluster {
+  display: flex;
+  align-items: flex-start;
+  gap: 1rem;
+
+  // Collapse to column below 390px
+  @media (max-width: 389px) {
+    flex-direction: column;
+    align-items: center;
+  }
+}
+
+.tech-group {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+// Mirrors: text-3xl text-center underline font-bold
+.tech-group-title {
+  font-size: 1.75rem;
+  text-align: center;
+  text-decoration: underline;
+  font-weight: 700;
+  margin-bottom: 0.75rem;
+}
+
+.tech-item {
+  white-space: nowrap;
+}
+
+.tech-icon-img {
+  width: 2rem;
+  height: 2rem;
+  object-fit: contain;
+}
+
+.aws-icon-text {
+  @extend .d-flex;
+  @extend .align-items-center;
+  @extend .gap-2;
+  @extend .fw-bold;
+  white-space: nowrap;
+}
+
+// Font Awesome icon (AWS) — sized to match SVGs
+.tech-icon-fa {
+  font-size: 2rem;
+  line-height: 1;
+  width: 2rem;
+  text-align: center;
+}

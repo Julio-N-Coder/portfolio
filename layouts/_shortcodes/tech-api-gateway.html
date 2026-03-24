@@ -1,0 +1,6 @@
+{{- $appending := .Get "appendingText" | default "" -}}
+{{- $class := .Get "class" | default "d-flex align-items-center gap-2 tech-item" -}}
+<div class="{{ $class }}">
+  <img src="{{ "svg/aws-svgs/aws-API-Gateway.svg" | relURL }}" class="tech-icon-img rounded-1" alt="AWS API Gateway SVG" />
+  <span>API Gateway{{ with $appending }}<span>{{ . }}</span>{{ end }}</span>
+</div>

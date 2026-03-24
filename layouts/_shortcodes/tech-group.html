@@ -1,0 +1,7 @@
+{{- $title := .Get "title" -}}
+<div class="tech-group">
+  {{ with $title }}<h3 class="tech-group-title">{{ . }}</h3>{{ end }}
+  <div class="d-flex flex-column gap-2">
+    {{ .Inner }}
+  </div>
+</div>

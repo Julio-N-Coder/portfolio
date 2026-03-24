@@ -1,0 +1,13 @@
+{{- $svg := .Get "svg" -}}
+{{- $title := .Get "title" -}}
+{{- $alt := .Get "alt" | default (printf "%s icon" (.Get "title")) -}}
+{{- $rounded := .Get "rounded" | default false -}}
+{{- $appending := .Get "appendingText" | default "" -}}
+<div class="d-flex align-items-center gap-2 tech-item">
+  <img
+    src="{{ $svg | relURL }}"
+    class="tech-icon-img{{ if $rounded }} rounded-1{{ end }}"
+    alt="{{ $alt }}"
+  />
+  <span>{{ $title }}{{ with $appending }}<span>{{ . }}</span>{{ end }}</span>
+</div>

@@ -14,9 +14,18 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4
       - name: Setup Node.js
-        uses: actions/setup-node@v4
+        uses: actions/setup-node@v6
         with:
-          node-version: 22
+          node-version: 24
+      - name: Setup Go
+        uses: actions/setup-go@v6
+        with:
+          go-version: '1.26'
+      - name: Setup Hugo
+        uses: peaceiris/actions-hugo@v3
+        with:
+          hugo-version: 'latest'
+          extended: true
       - name: Setup AWS Credentials
         uses: aws-actions/configure-aws-credentials@v2
         with:
@@ -25,9 +34,11 @@ jobs:
           aws-region: us-west-1
       - name: Install dependencies
         run: npm install
+      - name: Get Hugo Modules
+        run: hugo mod get ./...
       - name: Build
-        run: npm run build
+        run: hugo --minify
       - name: Store in S3 bucket
-        run: aws s3 sync ./dist/ s3://portfolio-website-static-bucket/ --delete
+        run: aws s3 sync ./public/ s3://portfolio-website-static-bucket/ --delete
       - name: Invalidate cloudfront Dist Cache
         run: aws cloudfront create-invalidation --distribution-id E32JWBEBSAC70X --paths "/*"

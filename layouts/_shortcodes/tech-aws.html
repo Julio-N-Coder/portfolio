@@ -1,0 +1,6 @@
+{{- $appending := .Get "appendingText" | default "" -}}
+{{- $class := .Get "class" | default "d-flex align-items-center gap-3 tech-item" -}}
+<div class="{{ $class }}">
+  <i class="fa-brands fa-aws tech-icon-fa" aria-label="AWS icon"></i>
+  <span>AWS{{ with $appending }}<span>{{ . }}</span>{{ end }}</span>
+</div>
