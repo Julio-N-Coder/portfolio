@@ -1,0 +1,18 @@
+{{- $svg := .svg -}}
+{{- $title := .title -}}
+{{- $alt := .alt | default (printf "%s icon" $title) -}}
+{{- $appending := .appendingText | default "" -}}
+{{- $class := .class | default "d-flex align-items-center gap-2 tech-item" -}}
+{{- $rounded := .rounded | default true -}}
+
+<div class="{{ $class }}">
+  <img
+    src="{{ $svg | relURL }}"
+    class="tech-icon-img{{ if $rounded }} rounded-1{{ end }}"
+    alt="{{ $alt }}"
+  />
+  <span>
+    {{ $title }}
+    {{ with $appending }}<span>{{ . }}</span>{{ end }}
+  </span>
+</div>

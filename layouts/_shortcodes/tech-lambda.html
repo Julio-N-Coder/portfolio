@@ -1,6 +1,0 @@
-{{- $appending := .Get "appendingText" | default "" -}}
-{{- $class := .Get "class" | default "d-flex align-items-center gap-2 tech-item" -}}
-<div class="{{ $class }}">
-  <img src="{{ "svg/aws-svgs/aws-Lambda.svg" | relURL }}" class="tech-icon-img rounded-1" alt="AWS Lambda SVG" />
-  <span>Lambda{{ with $appending }}<span>{{ . }}</span>{{ end }}</span>
-</div>

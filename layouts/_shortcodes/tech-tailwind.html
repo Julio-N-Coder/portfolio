@@ -1,6 +1,0 @@
-{{- $appending := .Get "appendingText" | default "" -}}
-{{- $class := .Get "class" | default "d-flex align-items-center gap-2 tech-item" -}}
-<div class="{{ $class }}">
-  <img src="{{ "svg/tailwind-svg.svg" | relURL }}" class="tech-icon-img" alt="Tailwind SVG" />
-  <span>Tailwind{{ with $appending }}<span>{{ . }}</span>{{ end }}</span>
-</div>

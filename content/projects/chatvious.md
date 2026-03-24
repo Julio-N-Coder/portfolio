@@ -47,28 +47,28 @@ deployed automatically.
 
 The following section shows the aws resouces used.
 
-{{< tech-lambda class="aws-icon-text" >}}
+{{< tech-icon svg="svg/aws-svgs/aws-Lambda.svg" title="Lambda" class="aws-icon-text" >}}
 The backend compute which is mainly invoked and ran by Api Gateway. They all use nodejs runtimes.
 
-{{< tech-api-gateway class="aws-icon-text" appendingText=" (Rest Api)" >}}
+{{< tech-icon svg="svg/aws-svgs/aws-API-Gateway.svg" title="API Gateway" class="aws-icon-text" appendingText=" (Rest Api)" >}}
 The app utilizes a REST Api Gateway to handle HTTP requests from the client.
 
-{{< tech-api-gateway class="aws-icon-text" appendingText=" (Websocket Api)" >}}
+{{< tech-icon svg="svg/aws-svgs/aws-API-Gateway.svg" title="API Gateway" class="aws-icon-text" appendingText=" (Websocket Api)" >}}
 The app utilizes a Websocket Api Gateway to handle Websocket requests from the client for real
 time communication.
 
-{{< tech-dynamodb class="aws-icon-text" >}}
+{{< tech-icon svg="svg/aws-svgs/aws-DynamoDB.svg" title="DynamoDB" class="aws-icon-text" >}}
 DynamoDB is used as the Database for Chatvious.
 
-{{< tech-cognito class="aws-icon-text" >}}
+{{< tech-icon svg="svg/aws-svgs/aws-Cognito.svg" title="Cognito" class="aws-icon-text" >}}
 The app utilizes Amazon Cognito User Pools to help with sign-up, sign-in, and the authentication
 and authorization processes.
 
-{{< tech-cloudfront class="aws-icon-text" >}}
+{{< tech-icon svg="svg/aws-svgs/aws-CloudFront.svg" title="CloudFront" class="aws-icon-text" >}}
 The app utilizes Amazon CloudFront To serve the Static Content that was made for this chatvious.
 Cloudfront also caches to static content reducing request to the s3 bucket.
 
-{{< tech-s3 class="aws-icon-text" >}}
+{{< tech-icon svg="svg/aws-svgs/aws-Simple-Storage-Service.svg" title="S3" class="aws-icon-text" >}}
 The app utilizes an Aws S3 bucket to store all the static content which CloudFront uses.
 
 <p class="fw-bold mb-0">Other</p>

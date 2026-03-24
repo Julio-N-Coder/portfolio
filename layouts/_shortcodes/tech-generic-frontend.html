@@ -1,17 +1,26 @@
 <div class="tech-group">
-  <h3 class="tech-group-title">Front End</h3>
-  <div class="d-flex flex-column gap-2">
-    <div class="d-flex align-items-center gap-2 tech-item">
-      <img src="{{ "svg/react-svg.svg" | relURL }}" class="tech-icon-img" alt="React SVG" />
-      <span>React</span>
-    </div>
-    <div class="d-flex align-items-center gap-2 tech-item">
-      <img src="{{ "svg/tailwind-svg.svg" | relURL }}" class="tech-icon-img" alt="Tailwind SVG" />
-      <span>Tailwind</span>
-    </div>
-    <div class="d-flex align-items-center gap-2 tech-item">
-      <img src="{{ "svg/typescript-svg.svg" | relURL }}" class="tech-icon-img" alt="TypeScript SVG" />
-      <span>TypeScript</span>
-    </div>
-  </div>
+<h3 class="tech-group-title">Front End</h3>
+<div class="d-flex flex-column gap-2">
+{{ partial "tech-icon.html" (dict
+  "svg" "svg/react-svg.svg"
+  "title" "React"
+  "alt" "React SVG"
+  "appendingText" ""
+  "class" "d-flex align-items-center gap-2 tech-item"
+) }}
+{{ partial "tech-icon.html" (dict
+  "svg" "svg/tailwind-svg.svg"
+  "title" "Tailwind"
+  "alt" "Tailwind SVG"
+  "appendingText" ""
+  "class" "d-flex align-items-center gap-2 tech-item"
+) }}
+{{ partial "tech-icon.html" (dict
+  "svg" "svg/typescript-svg.svg"
+  "title" "TypeScript"
+  "alt" "TypeScript SVG"
+  "appendingText" ""
+  "class" "d-flex align-items-center gap-2 tech-item"
+) }}
+</div>
 </div>

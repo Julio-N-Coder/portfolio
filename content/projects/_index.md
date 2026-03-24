@@ -31,30 +31,31 @@ if you would like to see that.
 {{% tech-stack %}}
 
 {{% tech-group title="Front End" %}}
-{{< tech-react >}}
-{{< tech-tailwind >}}
-{{< tech-typescript >}}
-{{< tech-ejs >}}
+{{< tech-icon svg="svg/react-svg.svg" title="React" >}}
+{{< tech-icon svg="svg/tailwind-svg.svg" title="Tailwind" >}}
+{{< tech-icon svg="svg/typescript-svg.svg" title="TypeScript" >}}
+{{< tech-icon svg="svg/ejs-svg.svg" title="EJS" >}}
+
 {{% /tech-group %}}
 
 {{% tech-cluster %}}
 
 {{% tech-group title="Back End" %}}
-{{< tech-nodejs >}}
-{{< tech-typescript >}}
-{{< tech-ejs >}}
+{{< tech-icon svg="svg/nodejs-icon-svg.svg" title="Node.js" >}}
+{{< tech-icon svg="svg/typescript-svg.svg" title="TypeScript" >}}
+{{< tech-icon svg="svg/ejs-svg.svg" title="EJS" >}}
 {{< tech-aws >}}
-{{< tech-aws-sam >}}
-{{< tech-github-actions >}}
+{{< tech-icon svg="svg/aws-svgs/aws-sam-svg.svg" title="AWS SAM" >}}
+{{< tech-icon svg="svg/github-actions-svg.svg" title="GitHub Actions" >}}
 {{% /tech-group %}}
 
 {{% tech-group title="AWS" %}}
-{{< tech-lambda >}}
-{{< tech-dynamodb >}}
-{{< tech-cloudfront >}}
-{{< tech-s3 >}}
-{{< tech-api-gateway >}}
-{{< tech-cognito >}}
+{{< tech-icon svg="svg/aws-svgs/aws-Lambda.svg" title="Lambda" >}}
+{{< tech-icon svg="svg/aws-svgs/aws-DynamoDB.svg" title="DynamoDB" >}}
+{{< tech-icon svg="svg/aws-svgs/aws-CloudFront.svg" title="CloudFront" >}}
+{{< tech-icon svg="svg/aws-svgs/aws-Simple-Storage-Service.svg" title="S3" >}}
+{{< tech-icon svg="svg/aws-svgs/aws-API-Gateway.svg" title="API Gateway" >}}
+{{< tech-icon svg="svg/aws-svgs/aws-Cognito.svg" title="Cognito" >}}
 {{% /tech-group %}}
 
 {{% /tech-cluster %}}
@@ -99,16 +100,16 @@ send emails.
 {{% tech-cluster %}}
  
 {{% tech-group title="Back End" %}}
-{{< tech-nodejs >}}
-{{< tech-typescript >}}
+{{< tech-icon svg="svg/nodejs-icon-svg.svg" title="Node.js" >}}
+{{< tech-icon svg="svg/typescript-svg.svg" title="TypeScript" >}}
 {{< tech-aws >}}
 {{% /tech-group %}}
  
 {{% tech-group title="AWS" %}}
-{{< tech-lambda >}}
-{{< tech-cloudfront >}}
-{{< tech-s3 >}}
-{{< tech-api-gateway >}}
+{{< tech-icon svg="svg/aws-svgs/aws-Lambda.svg" title="Lambda" >}}
+{{< tech-icon svg="svg/aws-svgs/aws-CloudFront.svg" title="CloudFront" >}}
+{{< tech-icon svg="svg/aws-svgs/aws-Simple-Storage-Service.svg" title="S3" >}}
+{{< tech-icon svg="svg/aws-svgs/aws-API-Gateway.svg" title="API Gateway" >}}
 {{% /tech-group %}}
  
 {{% /tech-cluster %}}
@@ -146,12 +147,12 @@ Technoloiges used to build this website.
  
 {{% tech-group title="Back End" %}}
 {{< tech-aws >}}
-{{< tech-github-actions >}}
+{{< tech-icon svg="svg/github-actions-svg.svg" title="GitHub Actions" >}}
 {{% /tech-group %}}
  
 {{% tech-group title="AWS" %}}
-{{< tech-cloudfront >}}
-{{< tech-s3 >}}
+{{< tech-icon svg="svg/aws-svgs/aws-CloudFront.svg" title="CloudFront" >}}
+{{< tech-icon svg="svg/aws-svgs/aws-Simple-Storage-Service.svg" title="S3" >}}
 {{% /tech-group %}}
  
 {{% /tech-cluster %}}
@@ -181,8 +182,8 @@ manage different jobs.
 {{< tech-generic-frontend >}}
  
 {{% tech-group title="Back End" %}}
-{{< tech-java >}}
-{{< tech-spring-boot >}}
+{{< tech-icon svg="svg/java-logo.svg" title="Java" >}}
+{{< tech-icon svg="svg/spring-boot.svg" title="Spring Boot" >}}
 {{% /tech-group %}}
  
 {{% /tech-stack %}}
