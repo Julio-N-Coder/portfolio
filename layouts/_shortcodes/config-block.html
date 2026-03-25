@@ -1,0 +1,108 @@
+{{/*
+  config-block shortcode
+  ──────────────────────
+  Renders a code block whose placeholders can be substituted with values from
+  a config-vars section. Shows a toggle between "Template" (placeholders
+  highlighted) and "With Values" (placeholders replaced) views.
+
+  If the content has no placeholders, the toggle is still shown but both views
+  will look identical — consider using a normal fenced code block instead.
+
+  Parameters:
+    group       (optional) — must match the `group` in your config-vars shortcode.
+                             Defaults to "default".
+    lang        (optional) — language label shown in the header (e.g. "bash",
+                             "ini", "conf"). Purely cosmetic; no syntax
+                             highlighting is applied because the content is
+                             rendered by JavaScript.
+    delim-start (optional) — opening placeholder delimiter. Defaults to "[[".
+    delim-end   (optional) — closing placeholder delimiter. Defaults to "]]".
+    title       (optional) — optional file/section label shown in the header.
+
+  Inner content:
+    Raw text with optional placeholders, e.g.
+      address [[lan_gateway_ip]]/24
+
+  Example usage:
+    {{< config-block group="alpine-router" lang="ini" title="/etc/network/interfaces" >}}
+    auto eth0
+    iface eth0 inet dhcp
+
+    auto br0
+    iface br0 inet static
+        address [[lan_gateway_ip]]/24
+        bridge_ports eth1 wlan0
+    {{< /config-block >}}
+
+  Note: Use {{< >}} (angle-bracket) style, NOT {{% %}} style, so that Hugo does
+  NOT interpret the inner content as Markdown.
+*/}}
+
+{{/* Signal to body-end.html that this page needs the config-vars script */}}
+{{- .Page.Store.Set "needsConfigVars" true -}}
+
+{{- $group      := .Get "group"       | default "default" -}}
+{{- $lang       := .Get "lang"        | default "" -}}
+{{- $delimStart := .Get "delim-start" | default "[[" -}}
+{{- $delimEnd   := .Get "delim-end"   | default "]]" -}}
+{{- $title      := .Get "title"       | default "" -}}
+
+{{/* Trim the leading/trailing newline Hugo adds around .Inner */}}
+{{- $raw := trim (printf "%s" .Inner) "\n" -}}
+
+<div
+  class="config-block mb-4"
+  data-config-block-group="{{ $group }}"
+  data-delim-start="{{ $delimStart }}"
+  data-delim-end="{{ $delimEnd }}"
+>
+  {{/* Header bar */}}
+  <div class="config-block-header d-flex align-items-center gap-2 px-3 py-2 border border-bottom-0 rounded-top">
+
+    {{/* Left side: language badge + optional title */}}
+    <div class="d-flex align-items-center gap-2 me-auto overflow-hidden">
+      {{ if $lang }}
+      <span class="badge bg-secondary text-uppercase" style="font-size: 0.7em; letter-spacing: 0.05em;">{{ $lang }}</span>
+      {{ end }}
+      {{ if $title }}
+      <span class="text-muted small text-truncate font-monospace" title="{{ $title }}">{{ $title }}</span>
+      {{ end }}
+    </div>
+
+    {{/* Right side: view toggle + copy */}}
+    <div class="d-flex align-items-center gap-2 flex-shrink-0">
+      <div class="btn-group btn-group-sm" role="group" aria-label="View mode">
+        <button
+          type="button"
+          class="btn btn-outline-secondary config-block-view-btn active"
+          data-view="template"
+          title="Show with placeholders highlighted"
+        >Template</button>
+        <button
+          type="button"
+          class="btn btn-outline-secondary config-block-view-btn"
+          data-view="substituted"
+          title="Show with your configured values substituted in"
+        >With Values</button>
+      </div>
+      <button
+        type="button"
+        class="btn btn-sm btn-outline-secondary config-block-copy"
+        title="Copy to clipboard"
+        aria-label="Copy to clipboard"
+      >
+        {{/* Clipboard icon */}}
+        <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" fill="currentColor" viewBox="0 0 16 16" aria-hidden="true" class="config-block-copy-icon">
+          <path d="M4 1.5H3a2 2 0 0 0-2 2V14a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V3.5a2 2 0 0 0-2-2h-1v1h1a1 1 0 0 1 1 1V14a1 1 0 0 1-1 1H3a1 1 0 0 1-1-1V3.5a1 1 0 0 1 1-1h1v-1z"/>
+          <path d="M9.5 1a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-3a.5.5 0 0 1-.5-.5v-1a.5.5 0 0 1 .5-.5h3zm-3-1A1.5 1.5 0 0 0 5 1.5v1A1.5 1.5 0 0 0 6.5 4h3A1.5 1.5 0 0 0 11 2.5v-1A1.5 1.5 0 0 0 9.5 0h-3z"/>
+        </svg>
+      </button>
+    </div>
+  </div>
+
+  {{/* Code area — content injected by TypeScript */}}
+  <pre class="config-block-pre m-0 border rounded-bottom"><code class="config-block-code" data-lang="{{ $lang }}"></code></pre>
+
+  {{/* Raw template stored in script so TS can read it */}}
+  <script type="application/json" class="config-block-raw">{{ $raw }}</script>
+</div>

@@ -1,0 +1,20 @@
+{{/*
+  Docsy's hook partial — included at the end of <body> on every page.
+
+  This partial compiles assets/ts/config-vars.ts via Hugo Pipes (esbuild)
+  and injects the resulting script only on pages that actually use the
+  config-vars or config-block shortcodes.
+*/}}
+
+{{ if .Page.Store.Get "needsConfigVars" }}
+  {{ $ts := resources.Get "ts/config-vars.ts" }}
+  {{ if $ts }}
+    {{ $opts := dict
+        "targetPath" "js/config-vars.js"
+        "minify"     hugo.IsProduction
+        "sourceMap"  "inline"
+    }}
+    {{ $js := $ts | js.Build $opts }}
+    <script src="{{ $js.RelPermalink }}" defer></script>
+  {{ end }}
+{{ end }}

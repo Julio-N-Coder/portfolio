@@ -1,0 +1,109 @@
+{{/*
+  config-vars shortcode
+  ─────────────────────
+  Renders a card with input fields for template variables used in config-block
+  shortcodes. Values are saved to localStorage keyed by `group`, enabling
+  cross-page sharing between related guide pages.
+
+  Parameters:
+    group  (optional) — shared key for localStorage + linking to config-blocks.
+                        Defaults to "default". Use the same group name on all
+                        related pages that share the same variables.
+    title  (optional) — card heading. Defaults to "Configuration Values".
+
+  Inner content format (one variable per line):
+    variable_name | Human Readable Label | Default Value
+
+  Example usage:
+    {{< config-vars group="alpine-router" >}}
+    lan_gateway_ip   | LAN Gateway IP (WAN-facing)  | 192.168.1.1
+    lan_gateway_ipv6 | LAN Gateway IPv6              | fd00::1
+    xfrm_id          | XFRM Interface ID             | 42
+    {{< /config-vars >}}
+*/}}
+
+{{/* Signal to body-end.html that this page needs the config-vars script */}}
+{{- .Page.Store.Set "needsConfigVars" true -}}
+
+{{- $group := .Get "group" | default "default" -}}
+{{- $title := .Get "title" | default "Configuration Values" -}}
+{{- $inner := .Inner | strings.TrimSpace -}}
+
+{{/* ── Parse variable definitions from inner content ── */}}
+{{- $vars := slice -}}
+{{- range (split $inner "\n") -}}
+  {{- $line := strings.TrimSpace . -}}
+  {{- if $line -}}
+    {{- $parts := split $line "|" -}}
+    {{- if ge (len $parts) 2 -}}
+      {{- $var := dict
+        "name"    (strings.TrimSpace (index $parts 0))
+        "label"   (strings.TrimSpace (index $parts 1))
+        "default" (cond (ge (len $parts) 3) (strings.TrimSpace (index $parts 2)) "")
+      -}}
+      {{- $vars = $vars | append $var -}}
+    {{- end -}}
+  {{- end -}}
+{{- end -}}
+
+<div class="config-vars-section card mb-4 border-primary" data-config-vars-group="{{ $group }}">
+
+  <div class="card-header d-flex align-items-center gap-2 bg-primary bg-opacity-10 border-bottom border-primary border-opacity-25">
+    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="text-primary flex-shrink-0" viewBox="0 0 16 16" aria-hidden="true">
+      <path fill-rule="evenodd" d="M11.5 2a1.5 1.5 0 1 0 0 3 1.5 1.5 0 0 0 0-3zM9.05 3a2.5 2.5 0 0 1 4.9 0H16v1h-2.05a2.5 2.5 0 0 1-4.9 0H0V3h9.05zM4.5 7a1.5 1.5 0 1 0 0 3 1.5 1.5 0 0 0 0-3zM2.05 8a2.5 2.5 0 0 1 4.9 0H16v1H6.95a2.5 2.5 0 0 1-4.9 0H0V8h2.05zm9.45 4a1.5 1.5 0 1 0 0 3 1.5 1.5 0 0 0 0-3zm-2.45 1a2.5 2.5 0 0 1 4.9 0H16v1h-2.05a2.5 2.5 0 0 1-4.9 0H0v-1h9.05z"/>
+    </svg>
+    <div>
+      <span class="fw-semibold">{{ $title }}</span>
+      <span class="text-muted small ms-2">— set your values once; they apply to the following compatable text blocks</span>
+    </div>
+  </div>
+
+  <div class="card-body">
+    <div class="row g-3">
+      {{ range $vars }}
+      <div class="col-sm-6 col-lg-4">
+        <label
+          for="config-var-{{ $group }}-{{ .name }}"
+          class="form-label small fw-semibold mb-1"
+        >{{ .label }}</label>
+        <input
+          type="text"
+          class="form-control form-control-sm config-var-input font-monospace"
+          id="config-var-{{ $group }}-{{ .name }}"
+          data-group="{{ $group }}"
+          data-var="{{ .name }}"
+          data-default="{{ .default }}"
+          placeholder="{{ if .default }}{{ .default }}{{ else }}(no default){{ end }}"
+          autocomplete="off"
+          spellcheck="false"
+        />
+        {{ if .default }}
+        <div class="form-text">Default: <code>{{ .default }}</code></div>
+        {{ end }}
+      </div>
+      {{ end }}
+    </div>
+
+    <div class="mt-3 d-flex flex-wrap align-items-center gap-2">
+      <button
+        type="button"
+        class="btn btn-primary btn-sm"
+        data-config-vars-apply="{{ $group }}"
+      >Apply Values</button>
+      <button
+        type="button"
+        class="btn btn-outline-secondary btn-sm"
+        data-config-vars-reset="{{ $group }}"
+      >Reset to Defaults</button>
+      <span
+        class="config-vars-status small"
+        data-group="{{ $group }}"
+        aria-live="polite"
+      ></span>
+    </div>
+  </div>
+
+  {{/* read by config-vars.ts */}}
+  <script type="application/json" id="config-vars-meta-{{ $group }}">{{ $vars | jsonify }}</script>
+
+</div>
