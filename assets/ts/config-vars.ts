@@ -325,6 +325,8 @@ function initConfigVarsSection(section: HTMLElement): void {
     ?.addEventListener('click', () => {
       const values: Record<string, string> = {};
       inputs.forEach((input) => {
+        input.value = '';
+
         const varName = input.dataset.var;
         if (varName) {
           const varDefault = input.dataset.default as string;
