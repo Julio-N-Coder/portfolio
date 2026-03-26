@@ -1,6 +1,6 @@
 # Use the “any schema” (no validation). Otherwise yaml schema validation reports false errors.
 # yaml-language-server: $schema=https://www.schemastore.org/any.json
-baseURL: https://example.docsy.dev
+baseURL: https://coding-wielder.com
 title: Coding Wielder Website
 
 # Navbar links

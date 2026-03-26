@@ -17,7 +17,7 @@ worked on. I hope you enjoy the site!
 {.display-6}
 
 <div class="td-cta-buttons my-5">
-  <a {{% _param btn-lg primary %}} href="projects/">
+  <a {{% _param btn-lg primary %}} href="/projects/">
     View My Projects
   </a>
 </div>
