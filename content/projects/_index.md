@@ -55,7 +55,6 @@ if you would like to see that.
 {{< tech-icon svg="svg/aws-svgs/aws-CloudFront.svg" title="CloudFront" >}}
 {{< tech-icon svg="svg/aws-svgs/aws-Simple-Storage-Service.svg" title="S3" >}}
 {{< tech-icon svg="svg/aws-svgs/aws-API-Gateway.svg" title="API Gateway" >}}
-{{< tech-icon svg="svg/aws-svgs/aws-Cognito.svg" title="Cognito" >}}
 {{% /tech-group %}}
 
 {{% /tech-cluster %}}
@@ -136,13 +135,17 @@ send emails.
 # Portfolio Website
 {.text-center}
  
-This Section is to explain the current Website we are on. Below are the
-Technoloiges used to build this website.
+This Section shows the current website you are on. The following technoloiges
+are used to build this website.
  
 {{% tech-stack %}}
- <!-- Update frontend stack to hugo -->
-{{< tech-generic-frontend >}}
- 
+
+{{% tech-group title="Front End" %}}
+{{< tech-icon svg="/svg/hugo.svg" title="Hugo" >}}
+{{< tech-icon svg="/favicons/favicon-32x32.png" title="Docsy" >}}
+{{< tech-icon svg="/svg/typescript-svg.svg" title="TypeScript" >}}
+{{% /tech-group %}}
+
 {{% tech-cluster %}}
  
 {{% tech-group title="Back End" %}}

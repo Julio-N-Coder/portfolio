@@ -60,10 +60,6 @@ time communication.
 {{< tech-icon svg="svg/aws-svgs/aws-DynamoDB.svg" title="DynamoDB" class="aws-icon-text" >}}
 DynamoDB is used as the Database for Chatvious.
 
-{{< tech-icon svg="svg/aws-svgs/aws-Cognito.svg" title="Cognito" class="aws-icon-text" >}}
-The app utilizes Amazon Cognito User Pools to help with sign-up, sign-in, and the authentication
-and authorization processes.
-
 {{< tech-icon svg="svg/aws-svgs/aws-CloudFront.svg" title="CloudFront" class="aws-icon-text" >}}
 The app utilizes Amazon CloudFront To serve the Static Content that was made for this chatvious.
 Cloudfront also caches to static content reducing request to the s3 bucket.
