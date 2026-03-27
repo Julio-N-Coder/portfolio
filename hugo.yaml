@@ -137,11 +137,11 @@ params:
       - name: Mailing list
         url: mailto:julio.coder.socials@gmail.com
         icon: fa fa-envelope
-        desc: Discussion and help from your fellow users
+        desc: Contact me through email
       - name: X
-        url: https://twitter.com/Night_Coder_404
+        url: https://x.com/Night_Coder_404
         icon: fab fa-x-twitter
-        desc: Follow us on X to get the latest news!
+        desc: Follow me on X!
       - name: Linkedin
         url: https://www.linkedin.com/in/julio-navarro-824983266
         icon: fa-brands fa-linkedin
@@ -151,7 +151,7 @@ params:
       - name: GitHub
         url: https://github.com/Julio-N-Coder
         icon: fab fa-github
-        desc: Development takes place here!
+        desc: My Github Page!
 
 security:
   funcs: # cspell:disable-line
