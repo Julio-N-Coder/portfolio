@@ -130,6 +130,8 @@ iface nord0
     # Create the xfrm link before bringing the interface up
     pre-up  ip link add nord0 type xfrm dev eth0 if_id [[xfrm_id]]
     post-up ip link set nord0 up
+    # Disable ipv6 on nord0
+    post-up sysctl -w net.ipv6.conf.nord0.disable_ipv6=1
     # Tear it down cleanly on ifdown
     post-down ip link set nord0 down
     post-down ip link del nord0
@@ -137,17 +139,29 @@ iface nord0
 
 Notes on Configuration:
 - `eth1` and `wlan0` are attached to `br0`, allowing LAN clients to connect via Ethernet or Wi-Fi.
-- IPv6 router advertisements are disabled on `br0` (not sysctl.conf) to prevent it from auto-configuring itself via SLAAC.
+- `nord0` is an XFRM interface used by strongSwan for IPSec/VPN routing.
+- IPv6 is disabled on `nord0` since nordvpn doesn't support and to remove unecessary addresses.
+- IPv6 router advertisements are disabled on `br0` to prevent it from auto-configuring itself via SLAAC.
 
-This is necessary because:
+sysctl kernel parameters are applied in `post-up` because of the following boot order:
 1. The kernel starts
 2. `/etc/sysctl.conf` is applied
 3. Networking starts
-4. `br0` is created
-5. Default IPv6 behavior is applied `accept_ra = 1`
+4. `br0` and `nord0` are created
+5. Default behavior is applied such as `accept_ra = 1` for `br0`
 
-Since br0 does not exist when sysctl runs, we override it using post-up.
-- nord0 is an XFRM interface used by strongSwan for IPSec/VPN routing.
+Since br0 and nord0 do not exist when sysctl runs, it's overrwritten using post-up.
+
+### Disable IPv6 on Bridge Slave Interfaces
+
+Add the following configuration to `/etc/sysctl.conf`.
+```ini
+# Disable ipv6 to remove link local ipv6 addresses on br0 slave interfaces
+net.ipv6.conf.eth1.disable_ipv6 = 1
+net.ipv6.conf.wlan0.disable_ipv6 = 1
+```
+
+IPv6 is disabled on `eth1` and `wlan0` because they are slave interfaces of the `br0` bridge. Network clients connect to `br0` so `eth1` and `wlan0` don't need ip addresses. This is not necessary but it helps remove unecessary ip addresses and clutter.
 
 Restart Networking:
 ```console
@@ -383,13 +397,6 @@ There are two main approaches:
 - dnsmasq → lightweight, simple, CLI-based
 - Pi-hole → feature-rich, web UI, ad-blocking
 
-You can also combine both.
-
-Choose Your Setup
-- Option A: dnsmasq (simple, lightweight)
-- Option B: Pi-hole (UI + ad blocking)
-- Option C: Hybrid (dnsmasq for DHCP + local DNS, Pi-hole upstream)
-
 ### Option A: dnsmasq (Recommended for simplicity)
 
 Install dnsmasq:
@@ -436,7 +443,7 @@ bogus-priv
 dhcp-option=option:dns-server,192.168.X.1
 # Tell clients to use this router for DNS with IPV6
 dhcp-option=option6:dns-server,[[[lan_gateway_ipv6]]]
-# Add pi-hole as a name server to forward unresolved dns request to on another port
+# Add a name server to forward unresolved dns request to on another port such as unbound or pihole
 #server=127.0.0.1#5335
 
 # IPv6 Router Advertisement
@@ -445,44 +452,6 @@ enable-ra
 # Clients configure with SLAAC and the specified prefix
 dhcp-range=[[lan_ipv6_prefix]],ra-only
 {{< /config-block >}}
-
-#### Local hostname resolution
-
-> **Note:**
-> dnsmasq reads the /etc/hosts and makes them resolvable to your LAN. If you haven't modified this file, it likely has default examples such as 127.0.0.1 for [[gateway_hostname]].my.domain from the first installation. This would resolve things such as the router hostname to localhost for clients which we don't want. I suggest removing the defaults and having something simple such as in the following step.
-
-Edit `/etc/hosts` with the following config
-```
-127.0.0.1 localhost
-::1       localhost
-```
-
-Keep this minimal to avoid incorrect resolution. You can also add domains to be resolved for clients and the router itself here.
-
-#### (Optional) Make router use its own DNS
-
-> **Note:**
-> We prevent resolv.conf from being overwritten because when DHCP runs, it rewrites "/etc/resolv.conf" to use the DNS servers given by an upstream router. Making the file immutable prevents DHCP from rewriting resolv.conf.
-
-Edit `/etc/resolv.conf` with the following config
-```
-nameserver 127.0.0.1
-```
-
-Prevent overwriting of `/etc/resolv.conf` by editing `/etc/udhcpc/udhcpc.conf` with the following
-```
-RESOLV_CONF="no"
-```
-
-Alternatively make `/etc/resolv.conf` immutability:
-```console
-$ chattr +i /etc/resolv.conf
-```
-
-Remove immutability when needed with:
-```console
-$ chattr -i /etc/resolv.conf
-```
 
 #### Start dnsmasq
 ```console
@@ -534,7 +503,8 @@ Example of changes made on pihole.toml:
     "1.1.1.1",
     "8.8.8.8"
   ] # cloudflare and google dns servers
-  interface = ""
+  domainNeeded = true
+  interface = "br0"
 [dhcp]
   active = true
   start = "192.168.X.2"
@@ -542,9 +512,14 @@ Example of changes made on pihole.toml:
   router = "192.168.X.1"
   netmask = "255.255.255.0"
   leaseTime = "24h"
+  ipv6 = true
+  rapidCommit = true
   hosts = [
     "00:00:00:00:00:00,192.168.X.X,HOSTNAME"
   ] # Static DHCP leases to mac address (OPTIONAL)
+[webserver]
+  [webserver.session]
+    timeout = 2592000 # 30 days
 ```
 
 #### Access pihole Web UI
@@ -565,38 +540,45 @@ Remove password:
 $ doas pihole setpassword ""
 ```
 
-### Option C: Hybrid (dnsmasq + Pi-hole)
+### Extra DHCP and DNS Configuration
 
-This is the most flexible setup:
-- dnsmasq → DHCP + local hostname resolution
-- Pi-hole → upstream DNS + ad blocking
+#### Local hostname resolution
 
-#### Configure Pi-hole
+> **Note:**
+> dnsmasq and pihole read the /etc/hosts file and makes them resolvable to your LAN. If you haven't modified this file, it likely has default examples such as 127.0.0.1 for [[gateway_hostname]].my.domain from the first installation. This would resolve things such as the router hostname to localhost for clients which we don't want. I suggest removing the defaults and having something simple such as in the following step.
 
-First, follow the steps in [Option B](#option-b-pi-hole) to install and setup pihole.
-
-Then simply configure pihole with the following options
-```toml
-[dhcp]
-active = false
-port = 5335
+Edit `/etc/hosts` with the following config
+```
+127.0.0.1 localhost
+::1       localhost
 ```
 
-#### Configure dnsmasq
+Keep this minimal to avoid incorrect resolution. You can also add domains to be resolved for clients and the router itself here.
 
-First, follow the steps in [Option A](#option-a-dnsmasq-recommended-for-simplicity) to install and setup pihole.
+#### (Optional) Make router use its own DNS
 
-Then simply uncomment the following line in `/etc/dnsmasq.d/dnsmasq.conf`
+> **Note:**
+> We prevent resolv.conf from being overwritten because when DHCP runs, it rewrites "/etc/resolv.conf" to use the DNS servers given by an upstream router. Making the file immutable prevents DHCP from rewriting resolv.conf.
+
+Edit `/etc/resolv.conf` with the following config
 ```
-server=127.0.0.1#5335
+nameserver 127.0.0.1
 ```
 
-#### How it works
+Prevent overwriting of `/etc/resolv.conf` by editing `/etc/udhcpc/udhcpc.conf` with the following
+```
+RESOLV_CONF="no"
+```
 
-1. Clients → query dnsmasq
-2. dnsmasq → resolves local names (e.g., `router.lan`)
-3. Unresolved queries → forwarded to Pi-hole
-4. Pi-hole → filters + resolves upstream
+Alternatively make `/etc/resolv.conf` immutability:
+```console
+$ chattr +i /etc/resolv.conf
+```
+
+Remove immutability when needed with:
+```console
+$ chattr -i /etc/resolv.conf
+```
 
 ## Routing Traffic Through NordVPN (IPSec + strongSwan)
 
