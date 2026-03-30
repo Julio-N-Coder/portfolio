@@ -199,3 +199,38 @@ manage different jobs.
 </div>
 
 {{% /blocks/section %}}
+
+{{% blocks/section type="row justify-content-md-around" %}}
+# Other Projects
+{.text-center}
+This section contains smaller projects such as scripts that I have made for various purposes.
+{.text-center}
+
+{{% blocks/feature
+  icon="fa-brands fa-github"
+  title="Update GitHub Apps"
+  url="https://github.com/Julio-N-Coder/update-github-apps"
+  url_text="View Project"
+%}}
+A Python script to automatically check and update applications from GitHub releases.
+{{% /blocks/feature %}}
+
+{{% blocks/feature
+  icon="fa-solid fa-video"
+  title="Smart Video Re-encoder"
+  url="https://github.com/Julio-N-Coder/smart-video-reencoder"
+  url_text="View Project"
+%}}
+A simple Python CLI tool that intelligently decides whether a video should be re-encoded by estimating potential size reduction before doing a full encode.
+{{% /blocks/feature %}}
+
+{{% blocks/feature
+  icon="fa-solid fa-gamepad"
+  title="3ds File Utils"
+  url="https://github.com/Julio-N-Coder/3ds-file-utils"
+  url_text="View Project"
+%}}
+A helper script for managing Nintendo 3DS–related files on a local system.
+{{% /blocks/feature %}}
+
+{{% /blocks/section %}}
