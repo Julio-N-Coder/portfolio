@@ -1,6 +1,6 @@
 ---
 title: Building a Router with Alpine Linux
-description: This guide walks through building a functional home router using Alpine Linux. The setup includes a WAN interface, LAN (Ethernet + Wi-Fi), firewalling with nftables, DHCP/DNS options (dnsmasq or Pi-hole), and optional VPN routing using strongSwan.
+description: This guide walks through building a functional home router using Alpine Linux. The setup includes a WAN interface, LAN (Ethernet + Wi-Fi), firewalling with nftables, DHCP/DNS options (dnsmasq or Pi-hole), and VPN routing using strongSwan.
 ---
 
 ## Requirements
@@ -21,7 +21,7 @@ Optional components used in this guide:
 
 This setup uses a single WAN interface (`eth0`) connected to the internet, and a LAN bridge (`br0`) that combines an Ethernet interface (`eth1`) and a wireless interface (`wlan0`).
 
-Devices can connect to the LAN either through Ethernet (via a switch) or Wi-Fi. The router provides services such as DHCP, DNS, and optional VPN routing.
+Devices can connect to the LAN either through Ethernet (via a switch) or Wi-Fi. The router provides services such as DHCP, DNS, and VPN routing.
 
 Traffic can either go directly to the internet or be routed through a VPN (`nord0`) depending on firewall and routing rules.
 
@@ -66,6 +66,7 @@ lan_subnet            | LAN Subnet (br0 subnet)      | 192.168.2.0/24
 gateway_hostname      | Gateway Hostname
 lan_gateway_ipv6      | LAN Gateway IPv6 (ULA, br0)  | fd42:6c61:6e00:1::1
 xfrm_id               | XFRM Interface ID (nord0)    | 42
+pmtu_value            | Path MTU value               | 1318
 lan_ipv6_prefix       | LAN IPv6 Prefix              | fd42:6c61:6e00:1::
 nord_service_username | Nordvpn Service Username
 nord_service_password | Nordvpn Service Password
@@ -129,6 +130,8 @@ iface nord0
     requires eth0
     # Create the xfrm link before bringing the interface up
     pre-up  ip link add nord0 type xfrm dev eth0 if_id [[xfrm_id]]
+    # Set nord0 mtu to (PMTU - 40). PMTU was received from PMTUD in ping
+    post-up ip link set dev nord0 mtu [[pmtu_value]]
     post-up ip link set nord0 up
     # Disable ipv6 on nord0
     post-up sysctl -w net.ipv6.conf.nord0.disable_ipv6=1
@@ -151,6 +154,19 @@ sysctl kernel parameters are applied in `post-up` because of the following boot 
 5. Default behavior is applied such as `accept_ra = 1` for `br0`
 
 Since br0 and nord0 do not exist when sysctl runs, it's overrwritten using post-up.
+
+### How to get pmtu_value
+
+The IPsec vpn connection adds extra overhead to network packets because of the Encapsulating Security Payload (ESP). This can cause packets to be bigger than the MTU value in a network path and because of this, the larger packets would be dropped. This is called an MTU black hole. To fix this, you need to set the MTU value on `nord0` to reasonably low value such as around 1300. Or to get a more specific MTU value, you can continue this guide and come back here once you have mostly everything setup.
+
+First, comment out the line with `[[pmtu_value]]` in the `/etc/network/interfaces` file. Then to get a specific MTU value for nord0, connect a computer/client to the router and run the following ping command.
+```console
+$ ping -c 1 -M do -s 1472 1.1.1.1
+PING 1.1.1.1 (1.1.1.1) 1472(1500) bytes of data.
+From 192.168.2.1 icmp_seq=1 Frag needed and DF set (mtu = 1358)
+```
+
+You should see something like `mtu = 1358` in the output. Grab that value and subract 40 from it `1358 - 40 = 1318`. 40 is subracted here because of the IP header (20 bytes) + TCP header (20 bytes) that is added after the original packet is encapsulated and stored as the outer packet payload. This value is also known as the `MSS` value of outer packet. Uncomment and replace `[[pmtu_value]]` in the `/etc/network/interfaces` file with the new value you calculated.
 
 ### Disable IPv6 on Bridge Slave Interfaces
 
@@ -213,6 +229,16 @@ table inet filter {
         ct state invalid drop \
         comment "Drop invalid forwarded packets"
 
+        # Allow IPv4 ICMP back to LAN clients
+        ip protocol icmp \
+        icmp type {
+            destination-unreachable, # type 3 (required, especially for fragmentation-needed (code 4) to allow Path MTU Discovery for vpn connection to function properly)
+            #echo-reply # type 0 (pings)
+            #echo-request, # type 8 (pings)
+            #time-exceeded, # type 11 (can be used by traceroute for debugging)
+        } accept \
+        comment "Allow IPv4 ICMP to LAN"
+
         # Currently use ULA addresses which are not routable to internet
         meta nfproto ipv6 drop comment "Block IPv6 forwarding"
         # Block ULA's (Unique Local Address)
@@ -227,7 +253,7 @@ table inet filter {
         #iifname $LAN_IFACES oifname "nord0" accept \
         #comment "Allow LAN to NordVPN forwarding"
 
-        # Optional: Allow WAN -> LAN for specific port forwards.
+        # Allow WAN -> LAN for specific port forwards.
         # This can be more specific such as specific ip
         # iifname "eth0" oifname $LAN_IFACES ct state { new } tcp dport 22 accept
 
@@ -700,7 +726,7 @@ secrets {
 
 Create an openrc script at `/usr/local/etc/init.d/nordvpn-route` with the following script.
 
-{{< config-block group="alpine-router" lang="openrc-run" title="/usr/local/etc/init.d/nordvpn-route" >}}
+```bash
 #!/sbin/openrc-run
 description="NordVPN Routing and SNAT Setup"
 
@@ -778,7 +804,7 @@ stop() {
     nft flush chain inet nat nordvpn_snat
     eend $?
 }
-{{< /config-block >}}
+```
 
 The `nordvpn-route` script:
 - Waits for strongSwans charon's VICI socket to be ready
@@ -822,9 +848,12 @@ table inet mangle {
         ip daddr @vpn_exclude_list return
         ip6 daddr $VPN_EXCLUDE_LIST_IPV6 return
 
+        # Mark all forwarded packets
+        mark set 0x1 comment "Route Forwarded Traffic through NordVPN"
+
         # Mark packets from a specific address (replace with what you want)
-        ip saddr 192.168.100.139 mark set 0x1 \
-        comment "Route IPs through NordVPN"
+        #ip saddr 192.168.100.139 mark set 0x1 \
+        #comment "Route IPs through NordVPN"
 
         # Match by MAC - useful for devices with dynamic IPs (phones, etc.)
         #ether saddr aa:bb:cc:dd:ee:ff mark set 0x1
@@ -838,6 +867,14 @@ table inet mangle {
         #ip daddr 23.246.0.0/18 mark set 0x1
     }
 
+    chain forward {
+        type filter hook forward priority mangle;
+
+        # Clamp MSS only for marked VPN traffic
+        tcp flags syn mark 0x1 tcp option maxseg size set rt mtu \
+        comment "Clamp MSS for VPN traffic"
+    }
+
     # Marking Local Packets that will be sent through XFRM interface to nordvpn
     chain output {
         type route hook output priority mangle; policy accept;
@@ -845,7 +882,7 @@ table inet mangle {
         ip6 daddr $VPN_EXCLUDE_LIST_IPV6 return
 
         # Mark all local packets (packets orginating from this server)
-        #mark set 0x1 comment "Route Local Traffic through NordVPN"
+        mark set 0x1 comment "Route Local Traffic through NordVPN"
     }
 }
 {{< /config-block >}}
@@ -998,7 +1035,7 @@ At this point, your Alpine Linux system should be functioning as:
 - A router (IPv4 NAT + forwarding)
 - A DHCP/DNS server
 - A wireless access point
-- (Optional) A VPN gateway
+- A VPN gateway
 
 You can now expand this setup with:
 
@@ -1010,3 +1047,4 @@ You can now expand this setup with:
 ## Further Reading
 - [Alpine Linux Home Router Guide](https://wiki.alpinelinux.org/wiki/Setting_up_a_Home_Router)
 - [Alpine Linux Wireless Access Point Guide](https://wiki.alpinelinux.org/wiki/How_to_setup_a_wireless_access_point)
+- [IPsec Protocol](https://docs.strongswan.org/docs/latest/howtos/ipsecProtocol.html)
