@@ -209,8 +209,8 @@ table inet filter {
     #define WAN_IFACES = { "eth0", "nord0" }
     define LOCAL_SUBNETS_IPV6 = { [[lan_ipv6_prefix]]/64 }
 
-    #counter all_traffic {
-    #    comment "WAN total traffic counter"
+    #counter wan_in {
+    #    comment "Incomming WAN traffic counter"
     #}
 
     set local_subnets {
@@ -327,8 +327,8 @@ table inet filter {
     #chain postrouting {
     #    type filter hook postrouting priority 0; policy accept;
 
-        # counter for all traffic (keeps track of packets and number of bytes)
-    #    oifname $WAN_IFACES counter name all_traffic
+        # counter for incomming WAN traffic (keeps track of packets and number of bytes)
+    #    iifname $WAN_IFACES ip saddr != @local_subnets counter name wan_in
     #}
 }
 {{< /config-block >}}
