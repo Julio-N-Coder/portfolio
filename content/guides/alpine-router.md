@@ -859,7 +859,7 @@ table inet mangle {
         ip daddr @vpn_exclude_list return
         ip6 daddr $VPN_EXCLUDE_LIST_IPV6 return
         # Exclude dns request to nordvpn to not break clients not being routed through nordvpn
-        # Sometimes nordvpn returns an internal ip for dns request that go through the vpn tunnel that only works for clients connectet to the vpn
+        # Sometimes nordvpn returns an internal ip for dns request that go through the vpn tunnel that only works for clients connected to the vpn
         ip daddr $DNS_SERVERS return
 
         # Mark all forwarded packets
@@ -1062,3 +1062,5 @@ You can now expand this setup with:
 - [Alpine Linux Home Router Guide](https://wiki.alpinelinux.org/wiki/Setting_up_a_Home_Router)
 - [Alpine Linux Wireless Access Point Guide](https://wiki.alpinelinux.org/wiki/How_to_setup_a_wireless_access_point)
 - [IPsec Protocol](https://docs.strongswan.org/docs/latest/howtos/ipsecProtocol.html)
+- [nftables quick reference](https://wiki.nftables.org/wiki-nftables/index.php/Quick_reference-nftables_in_10_minutes)
+- [Pi-hole documentation](https://docs.pi-hole.net/)
