@@ -825,6 +825,7 @@ Create the `/etc/nftables.d/mangle.nft` file with the following rules.
 
 # priority mangle = -150
 table inet mangle {
+    define LAN_IFACES = { "br0" }
     define VPN_EXCLUDE_LIST_IPV6 = { [[lan_ipv6_prefix]]/64 }
     define DNS_SERVERS = {
         1.1.1.1, 1.0.0.1, # Cloudflare
@@ -858,9 +859,6 @@ table inet mangle {
 
         ip daddr @vpn_exclude_list return
         ip6 daddr $VPN_EXCLUDE_LIST_IPV6 return
-        # Exclude dns request to nordvpn to not break clients not being routed through nordvpn
-        # Sometimes nordvpn returns an internal ip for dns request that go through the vpn tunnel that only works for clients connected to the vpn
-        ip daddr $DNS_SERVERS return
 
         # Mark all forwarded packets
         mark set 0x1 comment "Route Forwarded Traffic through NordVPN"
@@ -869,8 +867,8 @@ table inet mangle {
         #ip saddr 192.168.100.139 mark set 0x1 \
         #comment "Route IPs through NordVPN"
 
-        # Match by MAC - useful for devices with dynamic IPs (phones, etc.)
-        #ether saddr aa:bb:cc:dd:ee:ff mark set 0x1
+        # Match by MAC from LAN - useful for devices with dynamic IPs (phones, etc.)
+        #iifname $LAN_IFACES ether saddr aa:bb:cc:dd:ee:ff mark set 0x1
 
         # Route only specific destination ports through VPN. Regardless of source
         #tcp dport 6881-6889 mark set 0x1
@@ -894,6 +892,11 @@ table inet mangle {
         type route hook output priority mangle; policy accept;
         ip daddr @vpn_exclude_list return
         ip6 daddr $VPN_EXCLUDE_LIST_IPV6 return
+
+        # Exclude piholes forwarded dns request from nordvpn to not break clients not being routed through nordvpn
+        # Sometimes nordvpn returns an internal ip for dns request that go through the vpn tunnel that only works for clients connected to the vpn
+        # Pi-hole needs to run as the user "pihole" for this rule to work. It typicall does by defualt.
+        skuid "pihole" ip daddr $DNS_SERVERS return
 
         # Mark all local packets (packets orginating from this server)
         mark set 0x1 comment "Route Local Traffic through NordVPN"
