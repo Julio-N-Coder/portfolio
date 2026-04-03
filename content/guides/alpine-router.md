@@ -896,7 +896,8 @@ table inet mangle {
         # Exclude piholes forwarded dns request from nordvpn to not break clients not being routed through nordvpn
         # Sometimes nordvpn returns an internal ip for dns request that go through the vpn tunnel that only works for clients connected to the vpn
         # Pi-hole needs to run as the user "pihole" for this rule to work. It typicall does by defualt.
-        skuid "pihole" ip daddr $DNS_SERVERS return
+        skuid "pihole" udp dport 53 ip daddr $DNS_SERVERS return
+        skuid "pihole" tcp dport 53 ip daddr $DNS_SERVERS return
 
         # Mark all local packets (packets orginating from this server)
         mark set 0x1 comment "Route Local Traffic through NordVPN"
