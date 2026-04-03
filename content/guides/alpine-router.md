@@ -826,6 +826,17 @@ Create the `/etc/nftables.d/mangle.nft` file with the following rules.
 # priority mangle = -150
 table inet mangle {
     define VPN_EXCLUDE_LIST_IPV6 = { [[lan_ipv6_prefix]]/64 }
+    define DNS_SERVERS = {
+        1.1.1.1, 1.0.0.1, # Cloudflare
+        103.86.96.100, 103.86.99.100, # NordVPN
+        8.8.8.8, 8.8.4.4, # Google
+        208.67.222.222, 208.67.220.220, # OpenDNS
+        4.2.2.1, 4.2.2.2, # Level3
+        8.26.56.26, 8.20.247.20, # Comodo
+        9.9.9.9, 149.112.112.112, # Quad9 (filtered, DNSSEC)
+        9.9.9.10, 149.112.112.10, # Quad9 (unfiltered, no DNSSEC)
+        9.9.9.11, 149.112.112.11, # Quad9 (filtered, ECS, DNSSEC)
+    }
 
     set vpn_exclude_list {
         type ipv4_addr
@@ -847,6 +858,9 @@ table inet mangle {
 
         ip daddr @vpn_exclude_list return
         ip6 daddr $VPN_EXCLUDE_LIST_IPV6 return
+        # Exclude dns request to nordvpn to not break clients not being routed through nordvpn
+        # Sometimes nordvpn returns an internal ip for dns request that go through the vpn tunnel that only works for clients connectet to the vpn
+        ip daddr $DNS_SERVERS return
 
         # Mark all forwarded packets
         mark set 0x1 comment "Route Forwarded Traffic through NordVPN"
